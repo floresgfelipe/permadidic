@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+            <title>{{ title }} - DIDIC Veracruz</title>
+        {% else %}
+            <title>DIDIC Veracruz</title>
+        {% endif %}
+    </head>
+    <body>
+        <div><a href="/index">Inicio</a><a href="/login">Entrar</a></div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
