@@ -1,0 +1,2 @@
+FLASK_APP=permanente.py
+FLASK_DEBUG = TRUE

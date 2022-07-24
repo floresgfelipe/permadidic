@@ -1,2 +1,2 @@
-.flaskenv
 Pipfile.lock
+.env
