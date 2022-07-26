@@ -4,8 +4,7 @@ from wtforms import (
     PasswordField, 
     BooleanField, 
     SubmitField, 
-    SelectField,
-    SubmitField
+    SelectField
 )
 from wtforms.validators import DataRequired, Length, Regexp, EqualTo
 from flask_wtf.recaptcha import RecaptchaField
@@ -24,23 +23,25 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     nombre = StringField('Nombre completo', validators=[
         DataRequired(), 
-        Length(min=6, 
-        max=100)
+        Length(min=6, max=100)
     ])
 
-    parroquia = StringField('Parroquia', validators=[
-        DataRequired(), 
-        Length(min=6, 
-        max=100)
+    decanato = SelectField('Decanato', validators=[DataRequired()], choices=[
+        ('asuncion', 'Nuestra Señora de la Asunción'),
+        ('cristo rey', 'Cristo Rey'),
+        ('felipe', 'San Felipe de Jesús'),
+        ('ana', 'Santa Ana'),
+        ('jose', 'San José'),
+        ('soledad', 'Soledad'),
+        ('rosario', 'Nuestra Señora del Rosario'),
+        ('guadalupe', 'Guadalupe'),
+        ('inmaculada', 'Inmaculada')
     ])
 
-    decanato = StringField('Decanato', validators=[
-        DataRequired(),
-        Length(min=6, 
-        max=50)
-    ])
+    parroquia = SelectField('Parroquia', validators=[DataRequired()])
 
-    grado = SelectField('Grado al que se inscribe', choices=[
+    grado = SelectField('Grado al que se inscribe', 
+        validators=[DataRequired()], choices=[
         ('primero', '1o'), 
         ('segundo', '2o'), 
         ('tercero', '3o'),
@@ -54,8 +55,7 @@ class RegisterForm(FlaskForm):
 
     telefono = StringField('Celular Personal', validators=[
         DataRequired(),
-        Length(min=10, 
-        max=10)
+        Length(min=10, max=10)
     ])
 
     correo = StringField('Correo electrónico', validators=[
@@ -70,7 +70,7 @@ class RegisterForm(FlaskForm):
 
     confirmacion = PasswordField(
         'Escribe otra vez la contraseña', 
-        validators=DataRequired()
+        validators=[DataRequired()]
     )
 
     foto = FileField('Foto (Selfie)', validators=[
