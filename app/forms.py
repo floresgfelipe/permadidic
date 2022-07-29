@@ -73,18 +73,10 @@ class RegisterForm(FlaskForm):
         'Parroquia', 
         validators=[DataRequired(message='Este campo es obligatorio')], 
         choices=[
-            ('asun', 'Nuestra Señora de la Asunción'),
-            ('pastora', 'Rec. Nuestra Señora de Dolores (La Pastora)'),
-            ('scbv', 'Santo Cristo del Buen Viaje'),
-            ('asun-scj', 'Sagrado Corazón de Jesús'),
-            ('stella', 'Stella Maris'),
-            ('asun-nsg', 'Sant. Nuestra Señora de Guadalupe'),
-            ('luz', 'Madre Santísima de la Luz'),
-            ('madre-de-dios', 'Madre de Dios'),
-            ('sta-rita', 'Santa Rita de Casia'),
-            ('calazans', 'San José de Calasanz')
+            
         ],
-        render_kw={'autocomplete':'off'}
+        render_kw={'autocomplete':'off'},
+        validate_choice=False
     )
 
     grado = SelectField(
