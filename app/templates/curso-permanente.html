@@ -189,7 +189,7 @@
             ]
         }
 
-        decanato_select.onchange = function() {
+        let populate_parroquias = function() {
             let optionHTML = '';
 
             for (let parr of parroquias[decanato_select.value]) {
@@ -198,5 +198,9 @@
 
             parroquia_select.innerHTML = optionHTML;    
         }
+
+        window.onload = populate_parroquias;
+        decanato_select.onchange = populate_parroquias;
+
     </script>
 {% endblock %}
