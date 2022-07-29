@@ -4,81 +4,132 @@ from wtforms import (
     PasswordField, 
     BooleanField, 
     SubmitField, 
-    SelectField
+    SelectField,
 )
-from wtforms.validators import DataRequired, Length, Regexp, EqualTo
-from flask_wtf.recaptcha import RecaptchaField
-from flask_wtf.file import FileField, FileAllowed, FileRequired
-from flask_uploads import UploadSet, IMAGES
+from wtforms.validators import (
+    DataRequired,
+    Length,
+    Regexp,
+    EqualTo,
+)
+from flask_wtf.recaptcha import RecaptchaField, Recaptcha
 
-images = UploadSet('images', IMAGES)
 
 class LoginForm(FlaskForm):
-    username = StringField('Correo Electrónico', validators=[DataRequired()])
-    password = PasswordField('Contraseña', validators=[DataRequired()])
-    remember_me = BooleanField('Recordarme')
-    recaptcha = RecaptchaField()
-    submit = SubmitField('Entrar')
+    username = StringField(
+    'Correo Electrónico', 
+    validators=[DataRequired(message='Este campo es obligatorio')]
+)
+
+password = PasswordField(
+    'Contraseña', 
+    validators=[DataRequired(message='Este campo es obligatorio')]
+)
+
+remember_me = BooleanField('Recordarme')
+recaptcha = RecaptchaField(validators=[
+    Recaptcha(message='Error en la validación')
+])
+
+submit = SubmitField('Entrar')
 
 class RegisterForm(FlaskForm):
-    nombre = StringField('Nombre completo', validators=[
-        DataRequired(), 
-        Length(min=6, max=100)
+    nombres = StringField('Nombre(s)', validators=[
+        DataRequired(message='Este campo es obligatorio'), 
+        Length(min=1, max=50, 
+            message='El largo del nombre debe ser entre 1 y 50 caracteres')
     ])
 
-    decanato = SelectField('Decanato', validators=[DataRequired()], choices=[
-        ('asuncion', 'Nuestra Señora de la Asunción'),
-        ('cristo rey', 'Cristo Rey'),
-        ('felipe', 'San Felipe de Jesús'),
-        ('ana', 'Santa Ana'),
-        ('jose', 'San José'),
-        ('soledad', 'Soledad'),
-        ('rosario', 'Nuestra Señora del Rosario'),
-        ('guadalupe', 'Guadalupe'),
-        ('inmaculada', 'Inmaculada')
+    apellido_p = StringField('Apellido Paterno', validators=[
+        DataRequired(message='Este campo es obligatorio'), 
+        Length(min=1, max=30,
+             message='El largo del apellido debe ser entre 1 y 30 caracteres')
     ])
 
-    parroquia = SelectField('Parroquia', validators=[DataRequired()])
-
-    grado = SelectField('Grado al que se inscribe', 
-        validators=[DataRequired()], choices=[
-        ('primero', '1o'), 
-        ('segundo', '2o'), 
-        ('tercero', '3o'),
-        ('cuarto', '4o')
+    apellido_m = StringField('Apellido Materno', validators=[
+        DataRequired(message='Este campo es obligatorio'), 
+        Length(min=1, max=30,
+             message='El largo del apellido debe ser entre 1 y 30 caracteres')
     ])
 
-    boleta = FileField('Boleta del curso PERMANENTE anterior', validators=[
-        FileRequired(), 
-        FileAllowed(images)
-    ])
-
-    telefono = StringField('Celular Personal', validators=[
-        DataRequired(),
-        Length(min=10, max=10)
-    ])
-
-    correo = StringField('Correo electrónico', validators=[
-        DataRequired(),
-        Regexp('\A[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\Z')
-    ])
-
-    contraseña = PasswordField('Contraseña', validators=[
-        DataRequired(),
-        EqualTo('confirmacion')
-    ])
-
-    confirmacion = PasswordField(
-        'Escribe otra vez la contraseña', 
-        validators=[DataRequired()]
+    decanato = SelectField(
+        'Decanato',
+        validators=[DataRequired(message='Este campo es obligatorio')],
+        choices=[
+            ('asuncion', 'Nuestra Señora de la Asunción'),
+            ('cristo rey', 'Cristo Rey'),
+            ('felipe', 'San Felipe de Jesús'),
+            ('ana', 'Santa Ana'),
+            ('jose', 'San José'),
+            ('soledad', 'Soledad'),
+            ('rosario', 'Nuestra Señora del Rosario'),
+            ('guadalupe', 'Guadalupe'),
+            ('inmaculada', 'Inmaculada')
+        ], 
+        render_kw={'autocomplete':'off'}
     )
 
-    foto = FileField('Foto (Selfie)', validators=[
-        FileRequired(), 
-        FileAllowed(images)
+    parroquia = SelectField(
+        'Parroquia', 
+        validators=[DataRequired(message='Este campo es obligatorio')], 
+        choices=[
+            ('asun', 'Nuestra Señora de la Asunción'),
+            ('pastora', 'Rec. Nuestra Señora de Dolores (La Pastora)'),
+            ('scbv', 'Santo Cristo del Buen Viaje'),
+            ('asun-scj', 'Sagrado Corazón de Jesús'),
+            ('stella', 'Stella Maris'),
+            ('asun-nsg', 'Sant. Nuestra Señora de Guadalupe'),
+            ('luz', 'Madre Santísima de la Luz'),
+            ('madre-de-dios', 'Madre de Dios'),
+            ('sta-rita', 'Santa Rita de Casia'),
+            ('calazans', 'San José de Calasanz')
+        ],
+        render_kw={'autocomplete':'off'}
+    )
+
+    grado = SelectField(
+        'Grado al que se inscribe', 
+        validators=[DataRequired(message='Este campo es obligatorio')], 
+        choices=[
+            (1, 'Primer Grado'), 
+            (2, 'Segundo Grado'), 
+            (3, 'Tercer Grado'),
+            (4, 'Cuarto Grado')
+        ],
+        render_kw={'autocomplete':'off'}
+    )
+
+    telefono = StringField('Celular Personal', validators=[
+        DataRequired(message='Este campo es obligatorio'),
+        Length(min=10, max=10, 
+            message='El númer celular debe ser de 10 dígitos')
     ])
 
-    recaptcha = RecaptchaField()
+    correo = StringField('Correo Electrónico', validators=[
+        DataRequired(message='Este campo es obligatorio'),
+        Regexp('\A[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\Z',
+            message='Dirección de correo inválida')
+    ])
+
+    contraseña = PasswordField(
+        'Contraseña (min. 6 caracteres, max. 15 caracteres)', 
+        validators=[
+        DataRequired(message='Este campo es obligatorio'),
+        EqualTo('confirmacion', 
+            message='La contraseña y la confirmación deben coincidir'),
+        Length(min=6, max=15,
+            message='La contraseña debe tener entre 6 y 15 caracteres')
+        ]
+    )
+
+    confirmacion = PasswordField(
+        'Escriba otra vez la contraseña', 
+        validators=[DataRequired(message='Este campo es obligatorio')]
+    )
+
+    recaptcha = RecaptchaField(validators=[
+        Recaptcha(message='Error en la validación')
+    ])
 
     submit = SubmitField('Enviar')
-    
+

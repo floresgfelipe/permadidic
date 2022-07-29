@@ -1,20 +1,202 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Entrar</h1>
+    <h1>Registro al Curso Permanente</h1>
 
-    <form action="" method="post" novalidate>
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
         {{ form.hidden_tag() }}
         <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32)}}
+            {{ form.nombres.label }}<br>
+            {{ form.nombres(size=50)}}
+            {% for error in form.nombres.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32)}}
+            {{ form.apellido_p.label }}<br>
+            {{ form.apellido_p(size=32)}}
+            {% for error in form.apellido_p.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>
+            {{ form.apellido_m.label }}<br>
+            {{ form.apellido_m(size=32)}}
+            {% for error in form.apellido_m.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.decanato.label }}<br>
+            {{ form.decanato()}}
+            {% for error in form.decanato.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.parroquia.label }}<br>
+            {{ form.parroquia()}}
+            {% for error in form.parroquia.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.grado.label }}<br>
+            {{ form.grado()}}
+            {% for error in form.grado.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.telefono.label }}<br>
+            {{ form.telefono(size=32)}}
+            {% for error in form.telefono.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.correo.label }}<br>
+            {{ form.correo(size=32)}}
+            {% for error in form.correo.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.contraseña.label }}<br>
+            {{ form.contraseña(size=32)}}
+            {% for error in form.contraseña.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.confirmacion.label }}<br>
+            {{ form.confirmacion(size=32)}}
+            {% for error in form.confirmacion.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
         <p>{{ form.recaptcha }}</p>
         <p>{{ form.submit() }}</p>
     </form>
+    <script>
+        let decanato_select = document.getElementById('decanato');
+        let grado_select = document.getElementById('grado');
+        let parroquia_select = document.getElementById('parroquia');
+        let parroquias = {
+            'asuncion' : [
+                ['asun', 'Nuestra Señora de la Asunción'],
+                ['pastora', 'Rec. Nuestra Señora de Dolores (La Pastora)'],
+                ['scbv', 'Santo Cristo del Buen Viaje'],
+                ['asun-scj', 'Sagrado Corazón de Jesús'],
+                ['stella', 'Stella Maris'],
+                ['asun-nsg', 'Sant. Nuestra Señora de Guadalupe'],
+                ['luz', 'Madre Santísima de la Luz'],
+                ['madre-de-dios', 'Madre de Dios'],
+                ['sta-rita', 'Santa Rita de Casia'],
+                ['calazans', 'San José de Calasanz']
+            ],
+            'cristo rey' : [
+                ['cristo-nsc', 'Cristo Rey y Nuestra Señora del Carmen'],
+                ['natividad', 'C. Par. La Natividad del Señor'],
+                ['epifania', 'C. Par. La Epifanía del Señor'],
+                ['san-rafael-guizar', 'San Rafael Guízar y Valencia'],
+                ['san-gabriel', 'San Gabriel Arcángel'],
+                ['vera-cruz', 'Santa Vera-Cruz'],
+                ['beato-dario', 'C. Par. Beato Ángel Darío Acosta Zurita'],
+                ['divina', 'La Divina Providencia'],
+                ['consuelo', 'Nuestra Señora del Consuelo'],
+                ['buen-pastor', 'Jesús Buen Pastor'],
+                ['socorro-s-fco', 'Nuestra Señora del Perpetuo Socorro y San Francisco de Asís']
+            ],
+            'felipe' : [
+                ['sn-felipe', 'San Felipe de Jesús'],
+                ['merced', 'Nuestra Señora de la Merced'],
+                ['juquila', 'Nuestra Señora de Juquila'],
+                ['s-fco', 'San Francisco de Asís'],
+                ['s-jose', 'San José'],
+                ['sagrada-fam', 'La Sagrada Familia'],
+                ['esp-santo', 'El Espíritu Santo'],
+                ['s-judas', 'San Judas Tadeo'],
+                ['s-teresa', 'Santa Teresa de Ávila'],
+                ['ns-rosario', 'Nuestra Señora del Rosario']
+            ],
+            'ana' : [
+                ['s-ana', 'Santa Ana'],
+                ['s-judas-t', 'San Judas Tadeo'],
+                ['ns-carmen', 'Nuestra Señora del Carmen'],
+                ['s-teresita', 'Santa Teresita del Niño Jesús'],
+                ['s-jose-o', 'San José Obrero'],
+                ['ns-lagos', 'Nuestra Señora de San Juan de los Lagos'],
+                ['inmaculada-c', 'Inmaculada Concepción y San Judas Tadeo'],
+                ['sp-sp', 'San Pedro y San Pablo'],
+                ['jesus-naz', 'Jesús de Nazareth'],
+                ['s-miguel', 'San Miguel Arcángel'],
+                ['s-charbel', 'San Chárbel']
+            ],
+            'jose' : [
+                ['s-jose-m', 'San José de la Montaña'],
+                ['carlos-borro', 'San Carlos Borromeo'],
+                ['s-fco-asis', 'San Francisco de Asís'],
+                ['jose-nsg', 'Nuestra Señora de Guadalupe, Cardel'],
+                ['ps-scbv', 'Par. Santuario Santo Cristo del Buen Viaje'],
+                ['s-miguel-a', 'San Miguel Arcángel'],
+                ['nssc', 'Nuestra Señora del Sagrado Corazón'],
+                ['s-nsg', 'Santuario Nuestra Señora de Guadalupe, Paso de Ovejas'],
+                ['jose-nsg2', 'Nuestra Señora de Guadalupe, Tamarindo']
+            ],
+            'soledad' : [
+                ['ns-soledad', 'Nuestra Señora de la Soledad'],
+                ['s-juan-b', 'San Juan Bautista'],
+                ['sol-cristo', 'Cristo Rey'],
+                ['s-juan-d', 'Vicaría Fija "San Juan Diego"'],
+                ['sol-s-miguel', 'San Miguel Arcángel'],
+                ['s-pedro', 'San Pedro Apóstol'],
+                ['sol-inmaculada', 'La Inmaculada Concepción'],
+                ['sjpII', 'Cuasi-Parroquia San Juan Pablo II'],
+                ['sfjpm', 'Vicaría Fija: San Felipe de Jesús, Protomártir Mexicano'],
+                ['sol-juquila', 'Nuestra Señora de Juquila']
+            ],
+            'rosario' : [
+                ['nsr', 'Nuestra Señora del Rosario'],
+                ['s-cruz', 'La Santa Cruz'],
+                ['pedro-andres', 'Santos Apóstoles Pedro y Andrés'],
+                ['sma', 'Santa María de la Asunción'],
+                ['ros-scj', 'Sagrado Corazón de Jesús'],
+                ['ros-inmaculada', 'La Inmaculada Concepción, Piedras Negras'],
+                ['ros-inmaculada1', 'Inmaculada Concepción, La Tinaja'],
+                ['s-pedroa', 'San Pedro Apóstol']
+            ],
+            'guadalupe' : [
+                ['ssmg', 'Santuario Santa María de Guadalupe'],
+                ['gpe-s-carmen', 'Nuestra Señora del Carmen'],
+                ['transfiguracion', 'Vic. Fija la Transfiguración del Señor'],
+                ['cuerpo-sangre', 'Templo Expiatorio del Cuerpo y Sangre de Cristo'],
+                ['salvador', 'Divino Salvador'],
+                ['gpe-nsg', 'Nuestra Señora de Guadalupe'],
+                ['gpe-scj', 'Sagrado Corazón de Jesús'],
+                ['lucas', 'San Lucas Evangelista'],
+                ['gpe-cristo-rey', 'Cristo Rey'],
+                ['gpe-jose', 'San José']
+            ],
+            'inmaculada' : [
+                ['martin', 'San Martín de Tours'],
+                ['isidro', 'San Isidro Labrador'],
+                ['ascension', 'La Ascensión del Señor y Santiago Apóstol'],
+                ['antonio', 'San Antonio de Padua y Santa Lucía'],
+                ['nsr-fatima', 'Nuestra Señora del Rosario de Fátima'],
+                ['cristobal', 'San Cristóbal'],
+                ['inm-s-pedro', 'San Pedro Apóstol y Nuestra Señora de Pentecostés']
+            ]
+        }
+
+        decanato_select.onchange = function() {
+            let optionHTML = '';
+
+            for (let parr of parroquias[decanato_select.value]) {
+                optionHTML += '<option value="' + parr[0] + '">' + parr[1] + '</option>';
+            }
+
+            parroquia_select.innerHTML = optionHTML;    
+        }
+    </script>
 {% endblock %}

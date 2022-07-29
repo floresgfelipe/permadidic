@@ -9,9 +9,9 @@
     </head>
     <body>
         <div>
-            <a href="/index">Inicio</a>
-            <a href="/curso-permanente">Inscribirse al Curso Permanente</a>
-            <a href="/entrar">Entrar al Curso</a></div>
+            <a href="{{ url_for('index') }}">Inicio</a>
+            <a href="{{ url_for('curso_permanente') }}">Inscribirse al Curso Permanente</a>
+            <a href="{{ url_for('entrar') }}">Entrar al Curso</a></div>
         <hr>
         {% block content %}{% endblock %}
     </body>
