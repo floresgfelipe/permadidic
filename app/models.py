@@ -1,3 +1,4 @@
+from sqlalchemy import ForeignKey
 from app import db
 
 class Alumno(db.Model):
@@ -19,10 +20,10 @@ class Alumno(db.Model):
     boleta = db.Column(db.String(120))
     calificaciones = db.relationship(
         'Evaluacion', 
-        backref='calificacion', 
-        lazy='dynamic'
+        secondary='calificaciones',
+        back_populates='alumno'
     )
-
+    
     def __repr__(self) -> str:
         return f'<Alumno {self.matricula} {self.nombres} \
             {self.apellido_p} {self.apellido_m}>'
@@ -49,14 +50,25 @@ class Grado(db.Model):
     def __repr__(self) -> str:
         return f'<Grado {self.nombre} generación: {self.año}>'
 
-
 class Evaluacion(db.Model):
     __tablename__ = 'evaluacion'
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50))
     descripcion = db.Column(db.String(50))
-    id_alumno = db.Column(db.Integer, db.ForeignKey('alumno.id'))
-
+    alumnos = db.relationship(
+        'Alumno',
+        secondary='calificaciones',
+        back_populates='evaluacion'
+    )
+    
     def __repr__(self) -> str:
         return f'<{self.nombre} {self.descripcion}>'
+
+class Calificaciones(db.Model):
+    __tablename__ = 'calificaciones'
+
+    id_alumno = db.Column(ForeignKey('alumno.id'), primary_key=True)
+    id_evaluacion = db.Column(ForeignKey('evaluacion.id'), primary_key=True)
+    valor = db.Column(db.Integer, nullable=False)
+
