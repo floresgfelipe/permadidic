@@ -42,14 +42,14 @@ class RegisterForm(FlaskForm):
 
     apellido_p = StringField('Apellido Paterno', validators=[
         DataRequired(message='Este campo es obligatorio'), 
-        Length(min=1, max=30,
-             message='El largo del apellido debe ser entre 1 y 30 caracteres')
+        Length(min=1, max=50,
+             message='El largo del apellido debe ser entre 1 y 50 caracteres')
     ])
 
     apellido_m = StringField('Apellido Materno', validators=[
         DataRequired(message='Este campo es obligatorio'), 
-        Length(min=1, max=30,
-             message='El largo del apellido debe ser entre 1 y 30 caracteres')
+        Length(min=1, max=50,
+             message='El largo del apellido debe ser entre 1 y 50 caracteres')
     ])
 
     decanato = SelectField(
