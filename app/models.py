@@ -18,10 +18,10 @@ class Alumno(db.Model):
     id_grado = db.Column(db.Integer, db.ForeignKey('grado.id'))
     pago = db.Column(db.Integer)
     boleta = db.Column(db.String(120))
-    calificaciones = db.relationship(
+    alumno_calificaciones = db.relationship(
         'Evaluacion', 
         secondary='calificaciones',
-        back_populates='alumno'
+        back_populates='alumnos'
     )
     
     def __repr__(self) -> str:
@@ -59,7 +59,7 @@ class Evaluacion(db.Model):
     alumnos = db.relationship(
         'Alumno',
         secondary='calificaciones',
-        back_populates='evaluacion'
+        back_populates='alumno_calificaciones'
     )
     
     def __repr__(self) -> str:
