@@ -10,9 +10,22 @@
     <body>
         <div>
             <a href="{{ url_for('index') }}">Inicio</a>
-            <a href="{{ url_for('curso_permanente') }}">Inscribirse al Curso Permanente</a>
-            <a href="{{ url_for('entrar') }}">Entrar al Curso</a></div>
+            {% if current_user.is_anonymous %}
+                <a href="{{ url_for('curso_permanente') }}">Inscribirse al Curso Permanente</a>
+                <a href="{{ url_for('entrar') }}">Entrar al Curso</a></div>
+            {% else %}
+            <a href="{{ url_for('logout') }}">Salir</a>
+            {% endif %}
         <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </body>
 </html>

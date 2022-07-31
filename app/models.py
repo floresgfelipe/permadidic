@@ -1,7 +1,11 @@
 from sqlalchemy import ForeignKey
-from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from app import db, login
+from flask import session
 
-class Alumno(db.Model):
+
+class Alumno(UserMixin, db.Model):
     __tablename__ = 'alumno'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -23,18 +27,30 @@ class Alumno(db.Model):
         secondary='calificaciones',
         back_populates='alumnos'
     )
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
     
     def __repr__(self) -> str:
         return f'<Alumno {self.matricula} {self.nombres} \
             {self.apellido_p} {self.apellido_m}>'
 
-class Admin(db.Model):
+class Admin(UserMixin, db.Model):
     __tablename__ = 'admin'
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     rol = db.Column(db.String(30))
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
     def __repr__(self) -> str:
         return f'<Admin {self.email} rol: {self.rol}>'
@@ -48,7 +64,7 @@ class Grado(db.Model):
     alumnos = db.relationship('Alumno', backref='grado', lazy='dynamic') 
 
     def __repr__(self) -> str:
-        return f'<Grado {self.nombre} generación: {self.año}>'
+        return f'<{self.nombre} Generación: {self.año}>'
 
 class Evaluacion(db.Model):
     __tablename__ = 'evaluacion'
@@ -71,4 +87,14 @@ class Calificaciones(db.Model):
     id_alumno = db.Column(ForeignKey('alumno.id'), primary_key=True)
     id_evaluacion = db.Column(ForeignKey('evaluacion.id'), primary_key=True)
     valor = db.Column(db.Integer, nullable=False)
+
+@login.user_loader
+def load_user(id):
+    if session['account_type'] == 'Admin':
+        return Admin.query.get(int(id))
+    elif session['account_type'] == 'Alumno':
+        return Alumno.query.get(int(id))
+    else:
+        return None
+
 
