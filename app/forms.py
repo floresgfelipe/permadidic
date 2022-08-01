@@ -11,27 +11,29 @@ from wtforms.validators import (
     Length,
     Regexp,
     EqualTo,
+    ValidationError
 )
 from flask_wtf.recaptcha import RecaptchaField, Recaptcha
+from app.models import Alumno
 
 
 class LoginForm(FlaskForm):
     username = StringField(
     'Correo Electrónico', 
     validators=[DataRequired(message='Este campo es obligatorio')]
-)
+    )
 
-password = PasswordField(
-    'Contraseña', 
-    validators=[DataRequired(message='Este campo es obligatorio')]
-)
+    password = PasswordField(
+        'Contraseña', 
+        validators=[DataRequired(message='Este campo es obligatorio')]
+    )
 
-remember_me = BooleanField('Recordarme')
-recaptcha = RecaptchaField(validators=[
-    Recaptcha(message='Error en la validación')
-])
+    remember_me = BooleanField('Recordarme')
+    recaptcha = RecaptchaField(validators=[
+        Recaptcha(message='Error en la validación')
+    ])
 
-submit = SubmitField('Entrar')
+    submit = SubmitField('Entrar')
 
 class RegisterForm(FlaskForm):
     nombres = StringField('Nombre(s)', validators=[
@@ -124,4 +126,11 @@ class RegisterForm(FlaskForm):
     ])
 
     submit = SubmitField('Enviar')
+
+    def validate_correo(self, correo):
+        alumno = Alumno.query.filter_by(email=correo.data).first()
+
+        if alumno is not None:
+            raise ValidationError('Direccion de correo ya registrada. \
+                Favor de utlizar uno diferente.')
 
