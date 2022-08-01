@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if current_user.is_authenticated %}
+        <h1>Hola, {{ current_user.nombres }}</h1>
+    {% endif %}
+
+    <div>
+        <p>Bienvenido a tu perfil del Curso Permanente del DIDIC Veracruz</p>
+    </div>
+{% endblock %}

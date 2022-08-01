@@ -90,9 +90,9 @@ class Calificaciones(db.Model):
 
 @login.user_loader
 def load_user(id):
-    if session['account_type'] == 'Admin':
+    if session.get('account_type') == 'Admin':
         return Admin.query.get(int(id))
-    elif session['account_type'] == 'Alumno':
+    elif session.get('account_type') == 'Alumno':
         return Alumno.query.get(int(id))
     else:
         return None

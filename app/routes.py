@@ -1,8 +1,34 @@
 from app import app
-from flask import redirect, render_template, url_for, flash, session
+from functools import wraps
+from flask import (
+    redirect, 
+    render_template, 
+    url_for, 
+    flash, 
+    session,
+    request,
+    redirect,
+    url_for
+)
 from flask_login import current_user, login_user, logout_user
 from app.models import Alumno, Admin
 from app.forms import LoginForm, RegisterForm
+
+def login_required_alumno(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('account_type') != 'Alumno':
+            return redirect(url_for('entrar', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+def login_required_admin(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('account_type') != 'Admin':
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/')
 @app.route('/index')
@@ -28,7 +54,7 @@ def entrar():
     return render_template('entrar.html', title='Entrar al Curso', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
-def entrar():
+def login():
     if current_user.is_authenticated:
         return redirect(url_for('admin'))
 
@@ -60,13 +86,17 @@ def curso_permanente():
 
 @app.route('/logout')
 def logout():
+    session.pop('account_type', None)
     logout_user()
-    return redirect(url_for('entrar'))
+    return redirect(url_for('index'))
 
 @app.route('/perfil')
+@login_required_alumno
 def perfil():
-    pass
+    return render_template('perfil.html', title='Perfil del Alumno')
 
 @app.route('/admin')
+@login_required_admin
 def admin():
     pass
+
