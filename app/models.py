@@ -22,6 +22,7 @@ class Alumno(UserMixin, db.Model):
     id_grado = db.Column(db.Integer, db.ForeignKey('grado.id'))
     pago = db.Column(db.Integer)
     boleta = db.Column(db.String(120))
+    servicio = db.Column(db.String(2))
     alumno_calificaciones = db.relationship(
         'Evaluacion', 
         secondary='calificaciones',

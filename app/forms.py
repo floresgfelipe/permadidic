@@ -93,6 +93,16 @@ class RegisterForm(FlaskForm):
         render_kw={'autocomplete':'off'}
     )
 
+    servicio = SelectField(
+        '¿Se encuentra actualmente prestando servicio como catequista?', 
+        validators=[DataRequired(message='Este campo es obligatorio')], 
+        choices=[
+            ('Si'), 
+            ('No')
+        ],
+        render_kw={'autocomplete':'off'}
+    )
+
     telefono = StringField('Celular Personal', validators=[
         DataRequired(message='Este campo es obligatorio'),
         Length(min=10, max=10, 

@@ -71,7 +71,7 @@ def login():
     
     return render_template('entrar.html', title='Admin', form=form)
 
-@app.route('/curso-permanente', methods=['GET', 'POST'])
+@app.route('/registro', methods=['GET', 'POST'])
 def curso_permanente():
     form = RegisterForm()
 
@@ -79,7 +79,7 @@ def curso_permanente():
         return redirect(url_for('perfil'))
     
     return render_template(
-        'curso-permanente.html',
+        'registro.html',
         title='Registro al Curso Permanente',
         form=form
     )
