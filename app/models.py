@@ -20,7 +20,7 @@ class Alumno(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     foto = db.Column(db.String(120))
     grado = db.Column(db.Integer)
-    grupo = db.String(1)
+    grupo = db.Column(db.String(1))
     pago = db.Column(db.Integer)
     boleta = db.Column(db.String(120))
     servicio = db.Column(db.String(2))
@@ -37,11 +37,12 @@ class Alumno(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def generar_matricula(self):
+        print(self.grupo)
         self.matricula = str(self.grado) + \
-             str(self.grupo) + self.nombres[0] + str(self.id)
+             str(self.grupo) + str(self.nombres[0]) + str(self.id)
     
     def __repr__(self) -> str:
-        return f'<Alumno {self.matricula} {self.nombres} \
+        return f'<Alumno {self.id} {self.matricula} {self.nombres} \
             {self.apellido_p} {self.apellido_m}>'
 
 class Admin(UserMixin, db.Model):

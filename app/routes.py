@@ -1,3 +1,4 @@
+from calendar import c
 from app import app, db
 from functools import wraps
 from flask import (
@@ -96,14 +97,16 @@ def registro():
             servicio = form.servicio.data
         )
 
+        alumno.set_password(form.contraseña.data)
         db.session.add(alumno)
         db.session.commit()
 
-        al = alumno.query.filter_by(email=form.correo.data).first()
+        alumno.generar_matricula()
+        db.session.commit()
 
-
-        alumno.set_password(form.contraseña.data)
-        return redirect(url_for('perfil'))
+        login_user(alumno, remember=True)
+        session['account_type'] = 'Alumno'
+        return redirect(url_for('perfil'))  
     
     return render_template(
         'registro.html',
