@@ -1,4 +1,4 @@
-from app import app
+from app import app, db
 from functools import wraps
 from flask import (
     redirect, 
@@ -72,10 +72,37 @@ def login():
     return render_template('entrar.html', title='Admin', form=form)
 
 @app.route('/registro', methods=['GET', 'POST'])
-def curso_permanente():
+def registro():
+    if current_user.is_authenticated:
+        return redirect(url_for('perfil'))
+
     form = RegisterForm()
 
     if form.validate_on_submit():
+        alumno = Alumno(
+            matricula = 'none', 
+            nombres = form.nombres.data,
+            apellido_p = form.apellido_p.data,
+            apellido_m = form.apellidp_m.data,
+            decanato = form.decanato.data,
+            parroquia = form.parroquia.data,
+            telefono = form.telefono.data,
+            email = form.correo.data,
+            foto = 'none',
+            grado = form.grado.data,
+            grupo = 'A',
+            pago = 0,
+            boleta = 'none',
+            servicio = form.servicio.data
+        )
+
+        db.session.add(alumno)
+        db.session.commit()
+
+        al = alumno.query.filter_by(email=form.correo.data).first()
+
+
+        alumno.set_password(form.contraseña.data)
         return redirect(url_for('perfil'))
     
     return render_template(

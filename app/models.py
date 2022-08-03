@@ -19,7 +19,8 @@ class Alumno(UserMixin, db.Model):
     email = db.Column(db.String(50), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     foto = db.Column(db.String(120))
-    id_grado = db.Column(db.Integer, db.ForeignKey('grado.id'))
+    grado = db.Column(db.Integer)
+    grupo = db.String(1)
     pago = db.Column(db.Integer)
     boleta = db.Column(db.String(120))
     servicio = db.Column(db.String(2))
@@ -34,6 +35,10 @@ class Alumno(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def generar_matricula(self):
+        self.matricula = str(self.grado) + \
+            self.nombres[0] + str(self.grupo) + str(self.id)
     
     def __repr__(self) -> str:
         return f'<Alumno {self.matricula} {self.nombres} \
@@ -56,16 +61,6 @@ class Admin(UserMixin, db.Model):
     def __repr__(self) -> str:
         return f'<Admin {self.email} rol: {self.rol}>'
 
-class Grado(db.Model):
-    __tablename__ = 'grado'
-
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(30))
-    año = db.Column(db.String(4))  
-    alumnos = db.relationship('Alumno', backref='grado', lazy='dynamic') 
-
-    def __repr__(self) -> str:
-        return f'<{self.nombre} Generación: {self.año}>'
 
 class Evaluacion(db.Model):
     __tablename__ = 'evaluacion'
