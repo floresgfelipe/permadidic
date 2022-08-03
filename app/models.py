@@ -38,7 +38,7 @@ class Alumno(UserMixin, db.Model):
 
     def generar_matricula(self):
         self.matricula = str(self.grado) + \
-            self.nombres[0] + str(self.grupo) + str(self.id)
+             str(self.grupo) + self.nombres[0] + str(self.id)
     
     def __repr__(self) -> str:
         return f'<Alumno {self.matricula} {self.nombres} \
