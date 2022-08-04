@@ -85,6 +85,18 @@ class Calificaciones(db.Model):
     id_evaluacion = db.Column(ForeignKey('evaluacion.id'), primary_key=True)
     valor = db.Column(db.Integer, nullable=False)
 
+class TicketSoporte(db.Model):
+    __tablename__ = 'ticket_soporte'
+
+    id =  db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(200))
+    decanato = db.Column(db.String(50))
+    parroquia = db.Column(db.String(80))
+    telefono = db.Column(db.String(10))    
+    email = db.Column(db.String(50))
+    asunto = db.Column(db.Integer)
+    comentario = db.Column(db.String(500))
+
 @login.user_loader
 def load_user(id):
     if session.get('account_type') == 'Admin':

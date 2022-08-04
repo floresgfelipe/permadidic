@@ -58,15 +58,15 @@ class RegisterForm(FlaskForm):
         'Decanato',
         validators=[DataRequired(message='Este campo es obligatorio')],
         choices=[
-            ('asuncion', 'Nuestra Señora de la Asunción'),
-            ('cristo rey', 'Cristo Rey'),
-            ('felipe', 'San Felipe de Jesús'),
-            ('ana', 'Santa Ana'),
-            ('jose', 'San José'),
-            ('soledad', 'Soledad'),
-            ('rosario', 'Nuestra Señora del Rosario'),
-            ('guadalupe', 'Guadalupe'),
-            ('inmaculada', 'Inmaculada')
+            ('Nuestra Señora de la Asunción'),
+            ('Cristo Rey'),
+            ('San Felipe de Jesús'),
+            ('Santa Ana'),
+            ('San José'),
+            ('Soledad'),
+            ('Nuestra Señora del Rosario'),
+            ('Guadalupe'),
+            ('Inmaculada')
         ], 
         render_kw={'autocomplete':'off'}
     )

@@ -84,7 +84,7 @@ def registro():
             matricula = 'none', 
             nombres = form.nombres.data,
             apellido_p = form.apellido_p.data,
-            apellido_m = form.apellidp_m.data,
+            apellido_m = form.apellido_m.data,
             decanato = form.decanato.data,
             parroquia = form.parroquia.data,
             telefono = form.telefono.data,

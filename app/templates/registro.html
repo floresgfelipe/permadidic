@@ -90,7 +90,7 @@
         let grado_select = document.getElementById('grado');
         let parroquia_select = document.getElementById('parroquia');
         let parroquias = {
-            'asuncion' : [
+            'Nuestra Señora de la Asunción' : [
                 ['asun', 'Nuestra Señora de la Asunción'],
                 ['pastora', 'Rec. Nuestra Señora de Dolores (La Pastora)'],
                 ['scbv', 'Santo Cristo del Buen Viaje'],
@@ -102,7 +102,7 @@
                 ['sta-rita', 'Santa Rita de Casia'],
                 ['calazans', 'San José de Calasanz']
             ],
-            'cristo rey' : [
+            'Cristo Rey' : [
                 ['cristo-nsc', 'Cristo Rey y Nuestra Señora del Carmen'],
                 ['natividad', 'C. Par. La Natividad del Señor'],
                 ['epifania', 'C. Par. La Epifanía del Señor'],
@@ -115,7 +115,7 @@
                 ['buen-pastor', 'Jesús Buen Pastor'],
                 ['socorro-s-fco', 'Nuestra Señora del Perpetuo Socorro y San Francisco de Asís']
             ],
-            'felipe' : [
+            'San Felipe de Jesús' : [
                 ['sn-felipe', 'San Felipe de Jesús'],
                 ['merced', 'Nuestra Señora de la Merced'],
                 ['juquila', 'Nuestra Señora de Juquila'],
@@ -127,7 +127,7 @@
                 ['s-teresa', 'Santa Teresa de Ávila'],
                 ['ns-rosario', 'Nuestra Señora del Rosario']
             ],
-            'ana' : [
+            'Santa Ana' : [
                 ['s-ana', 'Santa Ana'],
                 ['s-judas-t', 'San Judas Tadeo'],
                 ['ns-carmen', 'Nuestra Señora del Carmen'],
@@ -140,7 +140,7 @@
                 ['s-miguel', 'San Miguel Arcángel'],
                 ['s-charbel', 'San Chárbel']
             ],
-            'jose' : [
+            'San José' : [
                 ['s-jose-m', 'San José de la Montaña'],
                 ['carlos-borro', 'San Carlos Borromeo'],
                 ['s-fco-asis', 'San Francisco de Asís'],
@@ -151,7 +151,7 @@
                 ['s-nsg', 'Santuario Nuestra Señora de Guadalupe, Paso de Ovejas'],
                 ['jose-nsg2', 'Nuestra Señora de Guadalupe, Tamarindo']
             ],
-            'soledad' : [
+            'Soledad' : [
                 ['ns-soledad', 'Nuestra Señora de la Soledad'],
                 ['s-juan-b', 'San Juan Bautista'],
                 ['sol-cristo', 'Cristo Rey'],
@@ -163,7 +163,7 @@
                 ['sfjpm', 'Vicaría Fija: San Felipe de Jesús, Protomártir Mexicano'],
                 ['sol-juquila', 'Nuestra Señora de Juquila']
             ],
-            'rosario' : [
+            'Nuestra Señora del Rosario' : [
                 ['nsr', 'Nuestra Señora del Rosario'],
                 ['s-cruz', 'La Santa Cruz'],
                 ['pedro-andres', 'Santos Apóstoles Pedro y Andrés'],
@@ -173,7 +173,7 @@
                 ['ros-inmaculada1', 'Inmaculada Concepción, La Tinaja'],
                 ['s-pedroa', 'San Pedro Apóstol']
             ],
-            'guadalupe' : [
+            'Guadalupe' : [
                 ['ssmg', 'Santuario Santa María de Guadalupe'],
                 ['gpe-s-carmen', 'Nuestra Señora del Carmen'],
                 ['transfiguracion', 'Vic. Fija la Transfiguración del Señor'],
@@ -185,7 +185,7 @@
                 ['gpe-cristo-rey', 'Cristo Rey'],
                 ['gpe-jose', 'San José']
             ],
-            'inmaculada' : [
+            'Inmaculada' : [
                 ['martin', 'San Martín de Tours'],
                 ['isidro', 'San Isidro Labrador'],
                 ['ascension', 'La Ascensión del Señor y Santiago Apóstol'],
@@ -200,14 +200,21 @@
             let optionHTML = '';
 
             for (let parr of parroquias[decanato_select.value]) {
-                optionHTML += '<option value="' + parr[0] + '">' + parr[1] + '</option>';
+                optionHTML += '<option value="' + parr[1] + '">' + parr[1] + '</option>';
             }
 
-            parroquia_select.innerHTML = optionHTML;    
+            parroquia_select.innerHTML = optionHTML; 
+            
+            if (sessionStorage.getItem('parroquia') != null) {
+                parroquia_select.value = sessionStorage.getItem('parroquia');
+            } 
         }
 
         window.onload = populate_parroquias;
         decanato_select.onchange = populate_parroquias;
+        parroquia_select.onchange = function() {
+            sessionStorage.setItem('parroquia', parroquia_select.value)
+        }
 
     </script>
 {% endblock %}

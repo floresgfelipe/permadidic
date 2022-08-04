@@ -3,9 +3,19 @@
 {% block content %}
     {% if current_user.is_authenticated %}
         <h1>Hola, {{ current_user.nombres }}</h1>
+        <div>
+            <p>Bienvenido a tu perfil del Curso Permanente del DIDIC Veracruz</p>
+        </div>
+        
+        <div><p>Nombre completo: </p>{{ current_user.nombres }} {{ current_user.apellido_p }} {{ current_user.apellido_m }}</div>
+        <div><p>Matrícula: </p>{{ current_user.matricula }}</div>
+        <div><p>Decanato: </p>{{ current_user.decanato }}</div>
+        <div><p>Parroquia: </p>{{ current_user.parroquia }}</div>
+        <div><p>Email:</p>{{ current_user.email }}</div>
+        <div><p>¿Servicio Activo?</p>{{ current_user.servicio }}</div>
+        <div><p>Grado:</p>{{ current_user.grado }}</div>
+        <div><p>Grupo: </p>{{ current_user.grupo }}</div>
     {% endif %}
 
-    <div>
-        <p>Bienvenido a tu perfil del Curso Permanente del DIDIC Veracruz</p>
-    </div>
+    
 {% endblock %}
