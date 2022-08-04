@@ -1,22 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Entrar</h1>
-
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32)}}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32)}}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.recaptcha }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
-
-    <a href="{{ url_for('registro') }}">Inscribirse al Curso Permanente</a>
+    
+    <div class="columns is-mobile is-centered">
+        <div class="column"></div>
+        <div class="column">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class="mt-4">
+                    {% for message in messages %}
+                    <li class="notification is-danger">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            {% endwith %}
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="field mt-4">
+                    <label class="label">{{ form.username.label }}</label>
+                    <div class="control">
+                        {{ form.username(size=32)}}
+                    </div>   
+                    {% for error in form.username.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                    {% endfor %} 
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.password.label }}</label>
+                    <div class="control">
+                        {{ form.password(size=32)}}
+                    </div>
+                    {% for error in form.password.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                    {% endfor %} 
+                </div>
+                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                <p>{{ form.recaptcha }}</p>
+                {% for error in form.recaptcha.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+                <p>{{ form.submit() }}</p>
+            </form>
+            <div class="content mt-4"><a>Olvidé mi contraseña o correo</a></div>
+        </div>
+        <div class="column"></div>
+    </div>
 {% endblock %}

@@ -20,20 +20,26 @@ from app.models import Alumno
 class LoginForm(FlaskForm):
     username = StringField(
     'Correo Electrónico', 
-    validators=[DataRequired(message='Este campo es obligatorio')]
+    validators=[DataRequired(message='Este campo es obligatorio')],
+    render_kw={'class':'input'}
     )
 
     password = PasswordField(
         'Contraseña', 
-        validators=[DataRequired(message='Este campo es obligatorio')]
+        validators=[DataRequired(message='Este campo es obligatorio')],
+        render_kw={'class':'input'}
     )
 
     remember_me = BooleanField('Recordarme')
     recaptcha = RecaptchaField(validators=[
-        Recaptcha(message='Error en la validación')
-    ])
+        Recaptcha(message='Presiona sobre "No soy un robot"'),
+        ]
+    )
 
-    submit = SubmitField('Entrar')
+    submit = SubmitField(
+        'Entrar', 
+        render_kw={'class':'button is-link is-large mt-4'}
+        )
 
 class RegisterForm(FlaskForm):
     nombres = StringField('Nombre(s)', validators=[

@@ -1,21 +1,78 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if current_user.is_authenticated %}
-        <h1>Hola, {{ current_user.nombres }}</h1>
-        <div>
-            <p>Bienvenido a tu perfil del Curso Permanente del DIDIC Veracruz</p>
-        </div>
-        
-        <div><p>Nombre completo: </p>{{ current_user.nombres }} {{ current_user.apellido_p }} {{ current_user.apellido_m }}</div>
-        <div><p>Matrícula: </p>{{ current_user.matricula }}</div>
-        <div><p>Decanato: </p>{{ current_user.decanato }}</div>
-        <div><p>Parroquia: </p>{{ current_user.parroquia }}</div>
-        <div><p>Email:</p>{{ current_user.email }}</div>
-        <div><p>¿Servicio Activo?</p>{{ current_user.servicio }}</div>
-        <div><p>Grado:</p>{{ current_user.grado }}</div>
-        <div><p>Grupo: </p>{{ current_user.grupo }}</div>
+    {% if current_user.foto == 'none' %}
+        {% if current_user.boleta == 'none' and current_user.grado|int > 1 %}
+            <div class="container is-fluid mt-4">
+                <div class="notification is-danger is-size-4">
+                    Es necesario que subas una foto tuya (selfie) y de tu boleta del curso PERMANENTE anterior para completar tu registro.
+                </div>
+            </div>
+        {% else %}
+            <div class="container is-fluid mt-4">
+                <div class="notification is-danger is-size-4">
+                    Es necesario que subas una foto tuya (selfie) para completar tu registro.
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        {% if current_user.boleta == 'none' and current_user.grado|int > 1 %}
+            <div class="container is-fluid mt-4">
+                <div class="notification is-danger is-size-4">
+                    Es necesario que subas una foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
+                </div>
+            </div>
+        {% endif %}
     {% endif %}
-
+    <div class="tile is-ancestor m-4">
+        <div class="tile is-3 is-parent">
+            <div class="tile is-child box notification is-info">
+                <p class="title">Foto</p>
+                {% if current_user.foto == 'none' %}
+                <figure class="image is-1by1">
+                    <img src="{{ url_for('static', filename='anon.jpg') }}">
+                </figure>
+                {% endif %}
+                
+                {% if current_user.foto == 'none' %}
+                    <div class="content mt-4">
+                        <a class="button is-danger is-medium">Subir Foto (Selfie)</a>
+                    </div>
+                {% endif %}
+                {% if current_user.boleta == 'none' and current_user.grado|int > 1 %}
+                    <div class="content mt-4">
+                        <a class="button is-danger is-medium">Subir Boleta</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="tile is-6 is-parent">
+            <div class="tile is-child box notification has-background-light">
+                <p class="title">Nombre Completo</p>
+                <div class="content is-size-2">{{ current_user.nombres }} {{ current_user.apellido_p }} {{ current_user.apellido_m }}</div>
+                <p class="title">Decanato</p>
+                <div class="content is-size-2">{{ current_user.decanato }}</div>
+                <p class="title">Parroquia</p>
+                <div class="content is-size-2">{{ current_user.parroquia }}</div>
+                <p class="title">Correo Electrónico</p>
+                <div class="content is-size-2">{{ current_user.email }}</div>
+                <p class="title">Teléfono Celular</p>
+                <div class="content is-size-2">{{ current_user.telefono }}</div>
+            </div>
+        </div>
+        <div class="tile is-parent">
+            <div class="tile is-child box notification is-warning">
+                <p class="title">Matrícula</p>
+                <div class="content is-size-2">{{ current_user.matricula }}</div>
+                <p class="title">Grado</p>
+                <div class="content is-size-2">{{ current_user.get_grado() }}</div>
+                <p class="title">Grupo</p>
+                <div class="content is-size-2">{{ current_user.grupo }}</div>
+                <div class="content">
+                    <a class="button is-link is-medium">Solicitar Corrección de Datos</a>
+                </div>
+            </div>
+        </div>
+    </div>
     
 {% endblock %}
