@@ -37,9 +37,16 @@ class Alumno(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def generar_matricula(self):
-        print(self.grupo)
+        c = 0
+        if self.id < 10:
+            c = '00' + str(self.id)
+        elif self.id < 100:
+            c = '0' + str(self.id)
+        else:
+            c = self.id
+
         self.matricula = str(self.grado) + \
-             str(self.grupo) + str(self.nombres[0]) + str(self.id)
+             str(self.grupo) + str(self.nombres[0]) + c
     
     def __repr__(self) -> str:
         return f'<Alumno {self.id} {self.matricula} {self.nombres} \
