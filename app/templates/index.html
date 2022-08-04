@@ -1,8 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-    <div>
-        <p>Bienvenidos a la página de la Dimensión Diocesana de Pastoral Veracruz</p>
-    </div>
+        
+    <section class="hero is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="columns">
+                <div class="column is-two-thirds">
+                    <img src="{{ url_for('static', filename='landing.jpg') }}">
+                </div>
+                
+                <div class="column has-text-centered">
+                    <h3 class="title is-3">Curso Permanente 2022</h3>
+                    <a class="button is-large is-info" href="{{ url_for('registro') }}">
+                        Inscribirse al Curso
+                    </a>
+                    <br>
+                    <br>
+                    <a class="button is-large is-success" href="{{ url_for('entrar') }}">
+                        Entrar a tu Perfil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

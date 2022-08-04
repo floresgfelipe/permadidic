@@ -9,16 +9,32 @@
             <title>Catequesis Veracruz</title>
         {% endif %}
     </head>
-    <body>
-        <div>
-            <a href="{{ url_for('index') }}">Inicio</a>
-            {% if current_user.is_anonymous %}
-                <a href="{{ url_for('registro') }}">Inscribirse al Curso Permanente</a>
-                <a href="{{ url_for('entrar') }}">Entrar al Curso</a></div>
-            {% else %}
-                <a href="{{ url_for('logout') }}">Salir</a>
-            {% endif %}
-        <hr>
+    <body class="has-navbar-fixed-top">
+        <nav class="navbar is-fixed-top is-info" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{{ url_for('index') }}">
+                  <img src="{{ url_for('static', filename='didic_logo.jpg') }}" width="28" height="28">
+                </a>
+            
+                
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <p class="navbar-item">
+                        Dimensión Diocesana de Catequesis Veracruz
+                    </p>
+                </div>
+                <div class="navbar-end">
+                    {% if current_user.is_authenticated %}
+                        <div class="buttons">
+                            <a class="button is-primary mr-4" href="{{ url_for('logout') }}">
+                            <strong>Salir</strong>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>            
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
@@ -28,6 +44,7 @@
         </ul>
         {% endif %}
         {% endwith %}
+       
         {% block content %}{% endblock %}
     </body>
 </html>

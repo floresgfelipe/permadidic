@@ -48,6 +48,16 @@ class Alumno(UserMixin, db.Model):
         self.matricula = str(self.grado) + \
              str(self.grupo) + str(self.nombres[0]) + c
     
+    def get_grado(self):
+        if self.grado == 1:
+            return 'Primero'
+        elif self.grado == 2:
+            return 'Segundo'
+        elif self.grado == 3:
+            return 'Tercero'
+        else:
+            return 'Cuarto'
+    
     def __repr__(self) -> str:
         return f'<Alumno {self.id} {self.matricula} {self.nombres} \
             {self.apellido_p} {self.apellido_m}>'

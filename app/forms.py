@@ -40,19 +40,25 @@ class RegisterForm(FlaskForm):
         DataRequired(message='Este campo es obligatorio'), 
         Length(min=1, max=50, 
             message='El largo del nombre debe ser entre 1 y 50 caracteres')
-    ])
+        ],
+        render_kw={'class':'input'}
+    )
 
     apellido_p = StringField('Apellido Paterno', validators=[
         DataRequired(message='Este campo es obligatorio'), 
         Length(min=1, max=50,
              message='El largo del apellido debe ser entre 1 y 50 caracteres')
-    ])
+        ],
+        render_kw={'class':'input'}
+    )
 
     apellido_m = StringField('Apellido Materno', validators=[
         DataRequired(message='Este campo es obligatorio'), 
         Length(min=1, max=50,
              message='El largo del apellido debe ser entre 1 y 50 caracteres')
-    ])
+        ],
+        render_kw={'class':'input'}
+    )
 
     decanato = SelectField(
         'Decanato',
@@ -68,7 +74,7 @@ class RegisterForm(FlaskForm):
             ('Guadalupe'),
             ('Inmaculada')
         ], 
-        render_kw={'autocomplete':'off'}
+        render_kw={'autocomplete':'off', 'class':'select'}
     )
 
     parroquia = SelectField(
@@ -77,7 +83,7 @@ class RegisterForm(FlaskForm):
         choices=[
             
         ],
-        render_kw={'autocomplete':'off'},
+        render_kw={'autocomplete':'off', 'class':'select'},
         validate_choice=False
     )
 
@@ -90,7 +96,7 @@ class RegisterForm(FlaskForm):
             (3, 'Tercer Grado'),
             (4, 'Cuarto Grado')
         ],
-        render_kw={'autocomplete':'off'}
+        render_kw={'autocomplete':'off', 'class':'select'}
     )
 
     servicio = SelectField(
@@ -100,20 +106,24 @@ class RegisterForm(FlaskForm):
             ('Si'), 
             ('No')
         ],
-        render_kw={'autocomplete':'off'}
+        render_kw={'autocomplete':'off','class':'select'}
     )
 
     telefono = StringField('Celular Personal', validators=[
         DataRequired(message='Este campo es obligatorio'),
         Length(min=10, max=10, 
-            message='El númer celular debe ser de 10 dígitos')
-    ])
+            message='El número celular debe ser de 10 dígitos')
+        ],
+        render_kw={'class':'input'}
+    )
 
     correo = StringField('Correo Electrónico', validators=[
         DataRequired(message='Este campo es obligatorio'),
         Regexp('\A[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\Z',
             message='Dirección de correo inválida')
-    ])
+        ],
+        render_kw={'class':'input'}
+    )
 
     contraseña = PasswordField(
         'Contraseña (min. 6 caracteres, max. 15 caracteres)', 
@@ -123,19 +133,24 @@ class RegisterForm(FlaskForm):
             message='La contraseña y la confirmación deben coincidir'),
         Length(min=6, max=15,
             message='La contraseña debe tener entre 6 y 15 caracteres')
-        ]
+        ],
+        render_kw={'class':'input'}
     )
 
     confirmacion = PasswordField(
         'Escriba otra vez la contraseña', 
-        validators=[DataRequired(message='Este campo es obligatorio')]
+        validators=[DataRequired(message='Este campo es obligatorio')],
+        render_kw={'class':'input'}
     )
 
     recaptcha = RecaptchaField(validators=[
-        Recaptcha(message='Error en la validación')
+        Recaptcha(message='Presiona sobre "No soy un robot"')
     ])
 
-    submit = SubmitField('Enviar')
+    submit = SubmitField(
+        'Enviar', 
+        render_kw={'class':'button is-link is-large'}
+    )
 
     def validate_correo(self, correo):
         alumno = Alumno.query.filter_by(email=correo.data).first()

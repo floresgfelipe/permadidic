@@ -1,91 +1,142 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Registro al Curso Permanente</h1>
-    <div class="container is-fluid">
-        <form action="" method="post" enctype="multipart/form-data" novalidate>
-            {{ form.hidden_tag() }}
-            <p>
-                {{ form.nombres.label }}<br>
-                {{ form.nombres(size=50)}}
+<div class="mx-4 mt-2 container">
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="columns">
+            <div class="field column">
+                <label class="label">{{ form.nombres.label }}</label>
+                <div class="control">
+                    {{ form.nombres(size=50)}}
+                </div>
+
                 {% for error in form.nombres.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.apellido_p.label }}<br>
-                {{ form.apellido_p(size=32)}}
+            </div>
+            <div class="field column">
+                <label class="label">{{ form.apellido_p.label }}</label>
+                <div class="control">
+                    {{ form.apellido_p(size=50)}}
+                </div>
+                
                 {% for error in form.apellido_p.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.apellido_m.label }}<br>
-                {{ form.apellido_m(size=32)}}
+            </div>
+            <div class="field column">
+                <label class="label">{{ form.apellido_m.label }}</label>
+                <div class="control">
+                    {{ form.apellido_m(size=50)}}
+                </div>
+                
                 {% for error in form.apellido_m.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.decanato.label }}<br>
-                {{ form.decanato()}}
+            </div>
+        </div>
+        <div class="columns">
+            <div class="field column">
+                <label class="label">{{ form.decanato.label }}</label>
+                <div class="control">
+                    {{ form.decanato()}}
+                </div>
+                
                 {% for error in form.decanato.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.parroquia.label }}<br>
-                {{ form.parroquia()}}
+            </div>
+            <div class="field column">
+                <label class="label">{{ form.parroquia.label }}</label>
+                <div class="control">
+                    {{ form.parroquia()}}
+                </div>
+                
                 {% for error in form.parroquia.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.grado.label }}<br>
-                {{ form.grado()}}
+            </div>
+            <div class="field column">
+                <label class="label">{{ form.grado.label }}</label>
+                <div class="control">
+                    {{ form.grado()}}
+                </div>
+                
                 {% for error in form.grado.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.servicio.label }}<br>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{{ form.servicio.label }}</label>
+            <div class="control">
                 {{ form.servicio()}}
-                {% for error in form.grado.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.telefono.label }}<br>
-                {{ form.telefono(size=32)}}
+            </div>
+            
+            {% for error in form.grado.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="columns">
+            <div class="field column">
+                <label class="label">{{ form.telefono.label }}</label>
+                <div class="control">
+                    {{ form.telefono(size=50)}}
+                </div>
+                
                 {% for error in form.telefono.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.correo.label }}<br>
-                {{ form.correo(size=32)}}
+            </div>
+            <div class="field column">
+                <label class="label">{{ form.correo.label }}</label>
+                <div class="control">
+                    {{ form.correo(size=50)}}
+                </div>
+                
                 {% for error in form.correo.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.contraseña.label }}<br>
-                {{ form.contraseña(size=32)}}
+            </div>
+        </div>
+        <div class="columns">
+            <div class="field column">
+                <label class="label">{{ form.contraseña.label }}</label>
+                <div class="control">
+                    {{ form.contraseña(size=32)}}
+                </div>
+                
                 {% for error in form.contraseña.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.confirmacion.label }}<br>
-                {{ form.confirmacion(size=32)}}
+            </div>
+            <div class="field column">
+                <label class="label">{{ form.confirmacion.label }}</label>
+                <div class="control">
+                    {{ form.confirmacion(size=32)}}
+                </div>
+                
                 {% for error in form.confirmacion.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
+                    <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
-            </p>
-            <p>{{ form.recaptcha }}</p>
-            <p>{{ form.submit() }}</p>
-        </form>
-    </div>
+            </div>
+        </div>
+        <div class="field columns">
+            <div class="control column">
+                {{ form.recaptcha }}
+                {% for error in form.recaptcha.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="control column">
+                {{ form.submit() }}
+            </div>
+        </div>
+        
+    </form>
+</div>
     <script>
         let decanato_select = document.getElementById('decanato');
         let grado_select = document.getElementById('grado');
