@@ -2,89 +2,90 @@
 
 {% block content %}
     <h1>Registro al Curso Permanente</h1>
-
-    <form action="" method="post" enctype="multipart/form-data" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.nombres.label }}<br>
-            {{ form.nombres(size=50)}}
-            {% for error in form.nombres.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.apellido_p.label }}<br>
-            {{ form.apellido_p(size=32)}}
-            {% for error in form.apellido_p.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.apellido_m.label }}<br>
-            {{ form.apellido_m(size=32)}}
-            {% for error in form.apellido_m.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.decanato.label }}<br>
-            {{ form.decanato()}}
-            {% for error in form.decanato.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.parroquia.label }}<br>
-            {{ form.parroquia()}}
-            {% for error in form.parroquia.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.grado.label }}<br>
-            {{ form.grado()}}
-            {% for error in form.grado.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.servicio.label }}<br>
-            {{ form.servicio()}}
-            {% for error in form.grado.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.telefono.label }}<br>
-            {{ form.telefono(size=32)}}
-            {% for error in form.telefono.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.correo.label }}<br>
-            {{ form.correo(size=32)}}
-            {% for error in form.correo.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.contraseña.label }}<br>
-            {{ form.contraseña(size=32)}}
-            {% for error in form.contraseña.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.confirmacion.label }}<br>
-            {{ form.confirmacion(size=32)}}
-            {% for error in form.confirmacion.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.recaptcha }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <div class="container is-fluid">
+        <form action="" method="post" enctype="multipart/form-data" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.nombres.label }}<br>
+                {{ form.nombres(size=50)}}
+                {% for error in form.nombres.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.apellido_p.label }}<br>
+                {{ form.apellido_p(size=32)}}
+                {% for error in form.apellido_p.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.apellido_m.label }}<br>
+                {{ form.apellido_m(size=32)}}
+                {% for error in form.apellido_m.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.decanato.label }}<br>
+                {{ form.decanato()}}
+                {% for error in form.decanato.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.parroquia.label }}<br>
+                {{ form.parroquia()}}
+                {% for error in form.parroquia.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.grado.label }}<br>
+                {{ form.grado()}}
+                {% for error in form.grado.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.servicio.label }}<br>
+                {{ form.servicio()}}
+                {% for error in form.grado.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.telefono.label }}<br>
+                {{ form.telefono(size=32)}}
+                {% for error in form.telefono.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.correo.label }}<br>
+                {{ form.correo(size=32)}}
+                {% for error in form.correo.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.contraseña.label }}<br>
+                {{ form.contraseña(size=32)}}
+                {% for error in form.contraseña.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.confirmacion.label }}<br>
+                {{ form.confirmacion(size=32)}}
+                {% for error in form.confirmacion.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.recaptcha }}</p>
+            <p>{{ form.submit() }}</p>
+        </form>
+    </div>
     <script>
         let decanato_select = document.getElementById('decanato');
         let grado_select = document.getElementById('grado');
