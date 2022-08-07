@@ -4,37 +4,47 @@ from flask_login import UserMixin
 from app import db, login
 from flask import session
 
+APROBADO = 'ACREDITADO'
+REPROBADO = 'NO ACREDITADO'
 
 class Alumno(UserMixin, db.Model):
     __tablename__ = 'alumno'
 
     id = db.Column(db.Integer, primary_key=True)
     matricula = db.Column(db.String(10))
-    nombres = db.Column(db.String(50))
-    apellido_p = db.Column(db.String(50))
-    apellido_m = db.Column(db.String(50))
-    decanato = db.Column(db.String(50))
-    parroquia = db.Column(db.String(80))
-    telefono = db.Column(db.String(10))    
-    email = db.Column(db.String(50), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
-    foto = db.Column(db.String(120))
-    grado = db.Column(db.Integer)
-    grupo = db.Column(db.String(1))
-    pago = db.Column(db.Integer)
-    boleta = db.Column(db.String(120))
-    servicio = db.Column(db.String(2))
-    alumno_calificaciones = db.relationship(
-        'Evaluacion', 
-        secondary='calificaciones',
-        back_populates='alumnos'
-    )
+    nombres = db.Column(db.String(50), nullable=False)
+    apellido_p = db.Column(db.String(50), nullable=False)
+    apellido_m = db.Column(db.String(50), nullable=False)
+    dia_nac = db.Column(db.Integer,nullable=False)
+    mes_nac = db.Column(db.Integer, nullable=False)
+    año_nac = db.Column(db.Integer, nullable=False)
+    decanato = db.Column(db.String(50), nullable=False)
+    parroquia = db.Column(db.String(80), nullable=False)
+    telefono = db.Column(db.String(10), nullable=False)    
+    correo = db.Column(db.String(50), nullable=False, default='none')
+    foto = db.Column(db.String(200), nullable=False, default='none')
+    grado = db.Column(db.Integer, nullable=False)
+    grupo = db.Column(db.String(1), nullable=False)
+    boleta_carta = db.Column(db.String(200), nullable=False, default='none')
+    servicio = db.Column(db.String(2), nullable=False)
+    calificacion1 = db.Column(db.Integer, default=-1)
+    calificacion2 = db.Column(db.Integer, default=-1)
 
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+    def get_calificacion_primer_semestre(self):        
+        if self.calificacion1 == 0:
+            return REPROBADO
+        elif self.calificacion1 == 1:
+            return APROBADO
+        else:
+            return 'NO DISPONIBLE'
 
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+    def get_calificacion_segundo_semestre(self):
+        if self.calificacion2 == 0:
+            return REPROBADO
+        elif self.calificacion2 == 1:
+            return APROBADO
+        else:
+            return 'NO DISPONIBLE'
 
     def generar_matricula(self):
         c = 0
@@ -56,7 +66,7 @@ class Alumno(UserMixin, db.Model):
         elif self.grado == 3:
             return 'Tercero'
         else:
-            return 'Cuarto'
+            return 'Curso Especializado'
     
     def __repr__(self) -> str:
         return f'<Alumno {self.id} {self.matricula} {self.nombres} \
@@ -80,28 +90,6 @@ class Admin(UserMixin, db.Model):
         return f'<Admin {self.email} rol: {self.rol}>'
 
 
-class Evaluacion(db.Model):
-    __tablename__ = 'evaluacion'
-
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(50))
-    descripcion = db.Column(db.String(50))
-    alumnos = db.relationship(
-        'Alumno',
-        secondary='calificaciones',
-        back_populates='alumno_calificaciones'
-    )
-    
-    def __repr__(self) -> str:
-        return f'<{self.nombre} {self.descripcion}>'
-
-class Calificaciones(db.Model):
-    __tablename__ = 'calificaciones'
-
-    id_alumno = db.Column(ForeignKey('alumno.id'), primary_key=True)
-    id_evaluacion = db.Column(ForeignKey('evaluacion.id'), primary_key=True)
-    valor = db.Column(db.Integer, nullable=False)
-
 class TicketSoporte(db.Model):
     __tablename__ = 'ticket_soporte'
 
@@ -112,7 +100,7 @@ class TicketSoporte(db.Model):
     telefono = db.Column(db.String(10))    
     email = db.Column(db.String(50))
     asunto = db.Column(db.Integer)
-    comentario = db.Column(db.String(500))
+    comentario = db.Column(db.String(1000))
 
 @login.user_loader
 def load_user(id):
