@@ -2,39 +2,75 @@ from flask_wtf import FlaskForm
 from wtforms import (
     StringField, 
     PasswordField, 
-    BooleanField, 
     SubmitField, 
     SelectField,
 )
 from wtforms.validators import (
     DataRequired,
     Length,
-    Regexp,
-    EqualTo,
-    ValidationError
+    Regexp
 )
 from flask_wtf.recaptcha import RecaptchaField, Recaptcha
-from app.models import Alumno
+
 
 
 class LoginForm(FlaskForm):
-    username = StringField(
-    'Correo Electrónico', 
-    validators=[DataRequired(message='Este campo es obligatorio')],
-    render_kw={'class':'input'}
-    )
-
-    password = PasswordField(
-        'Contraseña', 
+    apellido_p = StringField(
+        'Apellido Paterno', 
         validators=[DataRequired(message='Este campo es obligatorio')],
         render_kw={'class':'input'}
     )
 
-    remember_me = BooleanField('Recordarme')
-    recaptcha = RecaptchaField(validators=[
-        Recaptcha(message='Presiona sobre "No soy un robot"'),
-        ]
+    apellido_m = PasswordField(
+        'Apellido Materno', 
+        validators=[DataRequired(message='Este campo es obligatorio')],
+        render_kw={'class':'input'}
     )
+
+    dia_nac = SelectField(
+        'Día', 
+        validators=[
+            DataRequired(message='Este campo es obligatorio'),
+        ],
+        choices=['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 
+            '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', 
+            '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+        render_kw={'autocomplete':'off', 'class':'select'}
+    )
+
+    mes_nac = SelectField(
+        'Mes',
+        validators=[
+            DataRequired(message='Este campo es obligatorio'),
+        ],
+        choices=['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 
+            'Diciembre'],
+        render_kw={'autocomplete':'off', 'class':'select'}
+    )
+
+    año_nac = SelectField(
+        'Año',
+        validators=[
+            DataRequired(message='Este campo es obligatorio'),
+        ],
+        choices=['', '1920','1921','1922','1923','1924','1925','1926','1927',
+            '1928','1929','1930','1931','1932','1933','1934','1935','1936',
+            '1937','1938','1939','1940','1941','1942','1943','1944','1945',
+            '1946','1947','1948','1949','1950','1951','1952','1953','1954',
+            '1955','1956','1957','1958','1959','1960','1961','1962','1963',
+            '1964','1965','1966','1967','1968','1969','1970','1971','1972',
+            '1973','1974','1975','1976','1977','1978','1979','1980','1981',
+            '1982','1983','1984','1985','1986','1987','1988','1989','1990',
+            '1991','1992','1993','1994','1995','1996','1997','1998','1999',
+            '2000','2001','2002','2003','2004','2005','2006','2007','2008',
+            '2009','2010','2011','2012','2013','2014','2015'],
+        render_kw={'autocomplete':'off', 'class':'select'}
+    )
+
+    recaptcha = RecaptchaField(validators=[
+        Recaptcha(message='Presiona sobre "No soy un robot"')
+    ])
 
     submit = SubmitField(
         'Entrar', 
@@ -66,19 +102,61 @@ class RegisterForm(FlaskForm):
         render_kw={'class':'input'}
     )
 
+    dia_nac = SelectField(
+        'Día', 
+        validators=[
+            DataRequired(message='Este campo es obligatorio'),
+        ],
+        choices=['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 
+            '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', 
+            '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+        render_kw={'autocomplete':'off', 'class':'select'}
+    )
+
+    mes_nac = SelectField(
+        'Mes',
+        validators=[
+            DataRequired(message='Este campo es obligatorio'),
+        ],
+        choices=['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 
+            'Diciembre'],
+        render_kw={'autocomplete':'off', 'class':'select'}
+    )
+
+    año_nac = SelectField(
+        'Año',
+        validators=[
+            DataRequired(message='Este campo es obligatorio'),
+        ],
+        choices=['', '1920','1921','1922','1923','1924','1925','1926','1927',
+            '1928','1929','1930','1931','1932','1933','1934','1935','1936',
+            '1937','1938','1939','1940','1941','1942','1943','1944','1945',
+            '1946','1947','1948','1949','1950','1951','1952','1953','1954',
+            '1955','1956','1957','1958','1959','1960','1961','1962','1963',
+            '1964','1965','1966','1967','1968','1969','1970','1971','1972',
+            '1973','1974','1975','1976','1977','1978','1979','1980','1981',
+            '1982','1983','1984','1985','1986','1987','1988','1989','1990',
+            '1991','1992','1993','1994','1995','1996','1997','1998','1999',
+            '2000','2001','2002','2003','2004','2005','2006','2007','2008',
+            '2009','2010','2011','2012','2013','2014','2015'],
+        render_kw={'autocomplete':'off', 'class':'select'}
+    )
+
     decanato = SelectField(
         'Decanato',
         validators=[DataRequired(message='Este campo es obligatorio')],
         choices=[
-            ('Nuestra Señora de la Asunción'),
-            ('Cristo Rey'),
-            ('San Felipe de Jesús'),
-            ('Santa Ana'),
-            ('San José'),
-            ('Soledad'),
-            ('Nuestra Señora del Rosario'),
-            ('Guadalupe'),
-            ('Inmaculada')
+            '',
+            'Nuestra Señora de la Asunción',
+            'Cristo Rey',
+            'San Felipe de Jesús',
+            'Santa Ana',
+            'San José',
+            'Soledad',
+            'Nuestra Señora del Rosario',
+            'Guadalupe',
+            'Inmaculada'
         ], 
         render_kw={'autocomplete':'off', 'class':'select'}
     )
@@ -97,10 +175,11 @@ class RegisterForm(FlaskForm):
         'Grado al que se inscribe', 
         validators=[DataRequired(message='Este campo es obligatorio')], 
         choices=[
+            ('', ''),
             (1, 'Primer Grado'), 
             (2, 'Segundo Grado'), 
             (3, 'Tercer Grado'),
-            (4, 'Cuarto Grado')
+            (4, 'Curso Especializado')
         ],
         render_kw={'autocomplete':'off', 'class':'select'}
     )
@@ -108,10 +187,7 @@ class RegisterForm(FlaskForm):
     servicio = SelectField(
         '¿Se encuentra actualmente prestando servicio como catequista?', 
         validators=[DataRequired(message='Este campo es obligatorio')], 
-        choices=[
-            ('Si'), 
-            ('No')
-        ],
+        choices=['', 'Si', 'No'],
         render_kw={'autocomplete':'off','class':'select'}
     )
 
@@ -123,31 +199,10 @@ class RegisterForm(FlaskForm):
         render_kw={'class':'input'}
     )
 
-    correo = StringField('Correo Electrónico', validators=[
-        DataRequired(message='Este campo es obligatorio'),
-        Regexp('\A[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\Z',
-            message='Dirección de correo inválida')
-        ],
+    correo = StringField('Correo Electrónico', 
         render_kw={'class':'input'}
     )
-
-    contraseña = PasswordField(
-        'Contraseña (min. 6 caracteres, max. 15 caracteres)', 
-        validators=[
-        DataRequired(message='Este campo es obligatorio'),
-        EqualTo('confirmacion', 
-            message='La contraseña y la confirmación deben coincidir'),
-        Length(min=6, max=15,
-            message='La contraseña debe tener entre 6 y 15 caracteres')
-        ],
-        render_kw={'class':'input'}
-    )
-
-    confirmacion = PasswordField(
-        'Escriba otra vez la contraseña', 
-        validators=[DataRequired(message='Este campo es obligatorio')],
-        render_kw={'class':'input'}
-    )
+ 
 
     recaptcha = RecaptchaField(validators=[
         Recaptcha(message='Presiona sobre "No soy un robot"')
@@ -157,11 +212,3 @@ class RegisterForm(FlaskForm):
         'Enviar', 
         render_kw={'class':'button is-link is-large'}
     )
-
-    def validate_correo(self, correo):
-        alumno = Alumno.query.filter_by(email=correo.data).first()
-
-        if alumno is not None:
-            raise ValidationError('Direccion de correo ya registrada. \
-                Favor de utlizar uno diferente.')
-

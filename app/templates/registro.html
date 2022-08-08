@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="mx-4 mt-2 container">
+<div class="mx-4 mt-2 container has-text-centered">
     <div class="container mb-4">
         <div class="notification is-link has-text-centered is-size-4">
             <p>Inscripción para el Curso Permanente de la Escuela Diocesana de Catequesis</p>
@@ -41,11 +41,58 @@
                 {% endfor %}
             </div>
         </div>
+       
+        <p class="title is-4 has-text-centered">Fecha de Nacimiento</p>
+        
+        
+        <div class="columns">
+            <div class="column"></div>
+            <div class="field column">
+                <label class="label">{{ form.dia_nac.label }}</label>
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        {{ form.dia_nac()}}
+                    </div>   
+                </div>
+                
+                {% for error in form.dia_nac.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="field column">
+                <label class="label">{{ form.mes_nac.label }}</label>
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        {{ form.mes_nac()}}
+                    </div>
+                </div>
+                
+                {% for error in form.mes_nac.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="field column">
+                <label class="label">{{ form.año_nac.label }}</label>
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        {{ form.año_nac()}}
+                    </div>
+                </div>
+                
+                {% for error in form.año_nac.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+        
+            <div class="column"></div>
+        </div>
         <div class="columns">
             <div class="field column">
                 <label class="label">{{ form.decanato.label }}</label>
-                <div class="control">
-                    {{ form.decanato()}}
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        {{ form.decanato()}}
+                    </div>
                 </div>
                 
                 {% for error in form.decanato.errors %}
@@ -54,8 +101,10 @@
             </div>
             <div class="field column">
                 <label class="label">{{ form.parroquia.label }}</label>
-                <div class="control">
-                    {{ form.parroquia()}}
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        {{ form.parroquia()}}
+                    </div>
                 </div>
                 
                 {% for error in form.parroquia.errors %}
@@ -64,8 +113,10 @@
             </div>
             <div class="field column">
                 <label class="label">{{ form.grado.label }}</label>
-                <div class="control">
-                    {{ form.grado()}}
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        {{ form.grado()}}
+                    </div>
                 </div>
                 
                 {% for error in form.grado.errors %}
@@ -76,7 +127,9 @@
         <div class="field">
             <label class="label">{{ form.servicio.label }}</label>
             <div class="control">
-                {{ form.servicio()}}
+                <div class="select">
+                    {{ form.servicio()}}
+                </div>
             </div>
             
             {% for error in form.grado.errors %}
@@ -105,29 +158,8 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="columns">
-            <div class="field column">
-                <label class="label">{{ form.contraseña.label }}</label>
-                <div class="control">
-                    {{ form.contraseña(size=32)}}
-                </div>
-                
-                {% for error in form.contraseña.errors %}
-                    <p class="help is-danger">{{ error }}</p>
-                {% endfor %}
-            </div>
-            <div class="field column">
-                <label class="label">{{ form.confirmacion.label }}</label>
-                <div class="control">
-                    {{ form.confirmacion(size=32)}}
-                </div>
-                
-                {% for error in form.confirmacion.errors %}
-                    <p class="help is-danger">{{ error }}</p>
-                {% endfor %}
-            </div>
-        </div>
         <div class="field columns">
+            <div class="column"></div>
             <div class="control column">
                 {{ form.recaptcha }}
                 {% for error in form.recaptcha.errors %}
@@ -138,6 +170,7 @@
             <div class="control column">
                 {{ form.submit() }}
             </div>
+            <div class="column"></div>
         </div>
         
     </form>

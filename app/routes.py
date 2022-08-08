@@ -43,14 +43,25 @@ def entrar():
 
     form = LoginForm()
     if form.validate_on_submit():
-        alumno = Alumno.query.filter_by(email=form.username.data).first()    
-        if alumno is None or not alumno.check_password(form.password.data):
-            flash('Correo o contraseña inválidos')
+        alumno = Alumno.query.filter_by(
+            apellido_p=form.apellido_p.data,
+            apellido_m=form.apellido_m.data
+        ).first()    
+        if alumno is None:
+            flash('No hay ningún alumno con esos apellidos')
             return redirect(url_for('entrar'))
-            
-        login_user(alumno, remember=form.remember_me.data)
-        session['account_type'] = 'Alumno'
-        return redirect(url_for('perfil'))
+        else:
+            if (
+                int(alumno.dia_nac) == int(form.dia_nac.data) and
+                int(alumno.mes_nac) == int(form.mes_nac.data) and
+                int(alumno.año_nac) == int(form.año_nac.data)
+            ):  
+                login_user(alumno, remember=form.remember_me.data)
+                session['account_type'] = 'Alumno'
+                return redirect(url_for('perfil'))
+            else:
+                flash('Fecha de nacimiento incorrecta')
+                return redirect(url_for('entrar'))
     
     return render_template('entrar.html', title='Entrar al Curso', form=form)
 
@@ -85,19 +96,18 @@ def registro():
             nombres = form.nombres.data,
             apellido_p = form.apellido_p.data,
             apellido_m = form.apellido_m.data,
+            dia_nac = form.dia_nac.data,
+            mes_nac = form.mes_nac.data,
+            año_nac = form.año_nac.data,
             decanato = form.decanato.data,
             parroquia = form.parroquia.data,
             telefono = form.telefono.data,
-            email = form.correo.data,
-            foto = 'none',
+            correo = form.correo.data,
             grado = form.grado.data,
             grupo = 'A',
-            pago = 0,
-            boleta = 'none',
             servicio = form.servicio.data
         )
 
-        alumno.set_password(form.contraseña.data)
         db.session.add(alumno)
         db.session.commit()
 
