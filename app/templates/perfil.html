@@ -2,31 +2,39 @@
 
 {% block content %}
     {% if current_user.foto == 'none' %}
-        {% if current_user.boleta == 'none' and current_user.grado|int > 1 %}
+        {% if current_user.boleta_carta == 'none' and current_user.grado|int > 1 %}
             <div class="container is-fluid mt-4">
-                <div class="notification is-danger is-size-4">
-                    Es necesario que subas una foto tuya (selfie) y de tu boleta del curso PERMANENTE anterior para completar tu registro.
+                <div class="notification is-danger is-size-4 has-text-centered">
+                    Es necesario que subas una foto tuya (selfie) y foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
                 </div>
             </div>
         {% else %}
             <div class="container is-fluid mt-4">
-                <div class="notification is-danger is-size-4">
-                    Es necesario que subas una foto tuya (selfie) para completar tu registro.
+                <div class="notification is-danger is-size-4 has-text-centered">
+                    Es necesario que subas una foto tuya (selfie) y foto de la Carta que te dio tu Párroco para completar tu registro.
                 </div>
             </div>
         {% endif %}
     {% else %}
-        {% if current_user.boleta == 'none' and current_user.grado|int > 1 %}
-            <div class="container is-fluid mt-4">
-                <div class="notification is-danger is-size-4">
-                    Es necesario que subas una foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
+        {% if current_user.boleta_carta == 'none' %}
+            {% if current_user.grado|int > 1 %}
+                <div class="container is-fluid mt-4">
+                    <div class="notification is-danger is-size-4 has-text-centered">
+                        Es necesario que subas una foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="container is-fluid mt-4">
+                    <div class="notification is-danger is-size-4 has-text-centered">
+                        Es necesario que subas una foto de la Carta que te dio tu Párroco para completar tu registro.
+                    </div>
+                </div>
+            {% endif %}
         {% endif %}
     {% endif %}
     <div class="tile is-ancestor m-4">
         <div class="tile is-3 is-parent">
-            <div class="tile is-child box notification is-info">
+            <div class="tile is-child box notification is-info has-text-centered">
                 <p class="title">Foto</p>
                 {% if current_user.foto == 'none' %}
                 <figure class="image is-1by1">
@@ -39,10 +47,16 @@
                         <a class="button is-danger is-medium">Subir Foto (Selfie)</a>
                     </div>
                 {% endif %}
-                {% if current_user.boleta == 'none' and current_user.grado|int > 1 %}
-                    <div class="content mt-4">
-                        <a class="button is-danger is-medium">Subir Boleta</a>
-                    </div>
+                {% if current_user.boleta_carta == 'none' %}
+                    {% if current_user.grado|int > 1 %}
+                        <div class="content mt-4">
+                            <a class="button is-danger is-medium">Subir Boleta</a>
+                        </div>
+                    {% else %}
+                        <div class="content mt-4">
+                            <a class="button is-danger is-medium">Subir Carta del Párroco</a>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -50,12 +64,16 @@
             <div class="tile is-child box notification has-background-light">
                 <p class="title">Nombre Completo</p>
                 <div class="content is-size-2">{{ current_user.nombres }} {{ current_user.apellido_p }} {{ current_user.apellido_m }}</div>
+                <p class="title">Fecha de Nacimiento</p>
+                <div class="content is-size-2">{{ current_user.dia_nac }} / {{ current_user.mes_nac }} / {{ current_user.año_nac }}</div>
                 <p class="title">Decanato</p>
                 <div class="content is-size-2">{{ current_user.decanato }}</div>
                 <p class="title">Parroquia</p>
                 <div class="content is-size-2">{{ current_user.parroquia }}</div>
-                <p class="title">Correo Electrónico</p>
-                <div class="content is-size-2">{{ current_user.email }}</div>
+                {% if current_user.correo != '' %}
+                    <p class="title">Correo Electrónico</p>
+                    <div class="content is-size-2">{{ current_user.correo }}</div>
+                {% endif %}
                 <p class="title">Teléfono Celular</p>
                 <div class="content is-size-2">{{ current_user.telefono }}</div>
             </div>

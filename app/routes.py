@@ -52,11 +52,11 @@ def entrar():
             return redirect(url_for('entrar'))
         else:
             if (
-                int(alumno.dia_nac) == int(form.dia_nac.data) and
-                int(alumno.mes_nac) == int(form.mes_nac.data) and
-                int(alumno.año_nac) == int(form.año_nac.data)
+                str(alumno.dia_nac) == str(form.dia_nac.data) and
+                str(alumno.mes_nac) == str(form.mes_nac.data) and
+                str(alumno.año_nac) == str(form.año_nac.data)
             ):  
-                login_user(alumno, remember=form.remember_me.data)
+                login_user(alumno, remember=True)
                 session['account_type'] = 'Alumno'
                 return redirect(url_for('perfil'))
             else:

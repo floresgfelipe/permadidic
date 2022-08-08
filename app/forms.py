@@ -21,7 +21,7 @@ class LoginForm(FlaskForm):
         render_kw={'class':'input'}
     )
 
-    apellido_m = PasswordField(
+    apellido_m = StringField(
         'Apellido Materno', 
         validators=[DataRequired(message='Este campo es obligatorio')],
         render_kw={'class':'input'}
