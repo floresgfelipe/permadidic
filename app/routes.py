@@ -1,4 +1,5 @@
-from calendar import c
+import imghdr
+import os
 from app import app, db
 from functools import wraps
 from flask import (
@@ -9,11 +10,22 @@ from flask import (
     session,
     request,
     redirect,
-    url_for
+    url_for,
+    abort,
+    send_from_directory
 )
 from flask_login import current_user, login_user, logout_user
 from app.models import Alumno, Admin
-from app.forms import LoginForm, RegisterForm
+from app.forms import LoginForm, RegisterForm, UploadForm
+from werkzeug.utils import secure_filename
+
+def validate_image(stream):
+    header = stream.read(512)
+    stream.seek(0) 
+    format = imghdr.what(None, header)
+    if not format:
+        return None
+    return '.' + (format if format != 'jpeg' else 'jpg')
 
 def login_required_alumno(f):
     @wraps(f)
@@ -133,7 +145,77 @@ def logout():
 @app.route('/perfil')
 @login_required_alumno
 def perfil():
-    return render_template('perfil.html', title='Perfil del Alumno')
+    return render_template(
+        'perfil.html', 
+        title='Perfil del Alumno', 
+        basename=os.path.basename
+    )
+
+@app.route('/subir-foto', methods=['GET', 'POST'])
+@login_required_alumno
+def subir_foto():
+    form = UploadForm()
+    
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            uploaded_file = form.file.data
+            filename = secure_filename(uploaded_file.filename)
+            if filename != '':
+                file_ext = os.path.splitext(filename)[1]
+                file_ext = str.lower(file_ext)
+                if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
+                        file_ext != validate_image(uploaded_file.stream):
+                    abort(400)
+
+                saved_filename = os.path.join(
+                        app.config['UPLOAD_PATH_FOTOS'], 
+                        current_user.get_id() + file_ext
+                    )
+
+                uploaded_file.save(saved_filename)
+                
+                current_user.foto = saved_filename
+                db.session.commit()
+            return redirect(url_for('perfil'))
+    return render_template('subir.html', title='Subir Foto', form=form)
+
+@app.route('/fotos/<filename>')
+@login_required_alumno
+def fotos(filename):
+    return send_from_directory(app.config['UPLOAD_PATH_FOTOS'], filename)
+
+@app.route('/subir-boleta', methods=['GET', 'POST'])
+@login_required_alumno
+def subir_boleta():
+    form = UploadForm()
+    
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            uploaded_file = form.file.data
+            filename = secure_filename(uploaded_file.filename)
+            if filename != '':
+                file_ext = os.path.splitext(filename)[1]
+                file_ext = str.lower(file_ext)
+                if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
+                        file_ext != validate_image(uploaded_file.stream):
+                    abort(400)
+
+                saved_filename = os.path.join(
+                        app.config['UPLOAD_PATH_BOLETAS'], 
+                        current_user.get_id() + file_ext
+                    )
+
+                uploaded_file.save(saved_filename)
+                
+                current_user.boleta_carta = saved_filename
+                db.session.commit()
+            return redirect(url_for('perfil'))
+    return render_template('subir.html', title='Subir Foto', form=form)
+
+@app.route('/boletas/<filename>')
+@login_required_alumno
+def boletas(filename):
+    return send_from_directory(app.config['UPLOAD_PATH_BOLETAS'], filename)
 
 @app.route('/admin')
 @login_required_admin

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="columns">
+    <div class="column"></div>
+    <div class="column">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                
+                <div class="control">
+                    {{ form.file() }}
+                </div>
+
+                <div class="control">
+                    <input type="submit" class="button is-link">
+                </div>
+            </form>
+    </div>
+    <div class="column">
+        {% for error in form.file.errors %}
+            <p class="help is-danger">{{ error }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

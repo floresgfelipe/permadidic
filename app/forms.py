@@ -1,14 +1,13 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import (
     StringField, 
-    PasswordField, 
     SubmitField, 
     SelectField,
 )
 from wtforms.validators import (
     DataRequired,
     Length,
-    Regexp
 )
 from flask_wtf.recaptcha import RecaptchaField, Recaptcha
 
@@ -212,3 +211,12 @@ class RegisterForm(FlaskForm):
         'Enviar', 
         render_kw={'class':'button is-link is-large'}
     )
+    
+class UploadForm(FlaskForm):
+    file = FileField('File', validators=[
+            FileRequired(message='Selecciona un archivo'),
+            FileAllowed(upload_set=['jpg', 'png', 'gif', 'jpeg'], 
+                message='Selecciona una foto')
+        ]
+    )
+    submit = SubmitField('Subir Foto')
