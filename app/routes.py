@@ -72,7 +72,7 @@ def entrar():
                     login_user(alumno, remember=True)
                     session['account_type'] = 'Alumno'
                     return redirect(url_for('perfil'))
-                    
+
             flash('Fecha de nacimiento incorrecta')
             return redirect(url_for('entrar'))
     
@@ -177,6 +177,8 @@ def subir_foto():
                 
                 current_user.foto = saved_filename
                 db.session.commit()
+            
+            flash('La foto se ha subido exitosamente')
             return redirect(url_for('perfil'))
     return render_template('subir.html', title='Subir Foto', form=form)
 
@@ -210,6 +212,8 @@ def subir_boleta():
                 
                 current_user.boleta_carta = saved_filename
                 db.session.commit()
+
+            flash('La boleta se ha subido exitosamente')
             return redirect(url_for('perfil'))
     return render_template('subir.html', title='Subir Foto', form=form)
 
@@ -231,9 +235,11 @@ def correccion_datos():
         'label' : '¿Qué es lo que necesita ser corregido?'
     }
     
+    print('holaaaaa')
     form = ContactForm()
 
     if form.validate_on_submit():
+        print('holaaaaa mundo')
         ticket = TicketSoporte(
             nombre = form.nombre.data,
             decanato = form.decanato.data,

@@ -7,7 +7,7 @@
             <p>Inscripción para el Curso Permanente de la Escuela Diocesana de Catequesis</p>
         </div>
     </div>
-    <form action="" method="post" enctype="multipart/form-data" novalidate>
+    <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <div class="columns">
             <div class="field column">
@@ -148,7 +148,7 @@
                 {% endfor %}
             </div>
             <div class="field column">
-                <label class="label">{{ form.correo.label }}</label>
+                <label class="label">{{ form.correo.label }} (No es obligatorio)</label>
                 <div class="control">
                     {{ form.correo(size=50)}}
                 </div>

@@ -4,6 +4,7 @@ from wtforms import (
     StringField, 
     SubmitField, 
     SelectField,
+    TextAreaField
 )
 from wtforms.validators import (
     DataRequired,
@@ -221,3 +222,47 @@ class UploadForm(FlaskForm):
         render_kw={'class':'file-input', 'accept':'png, jpg, jpeg, gif'}
     )
     submit = SubmitField('Subir Foto', render_kw={'class':'button is-link'})
+
+class ContactForm(FlaskForm):
+    nombre = StringField('Nombre Completo', validators=[
+        DataRequired(message='Este campo es obligatorio')
+        ],
+        render_kw={'class':'input'}
+    )
+
+    decanato = StringField('Decanato', validators=[
+        DataRequired(message='Este campo es obligatorio')
+        ],
+        render_kw={'class':'input'}
+    )
+
+    parroquia = StringField('Parroquia', validators=[
+        DataRequired(message='Este campo es obligatorio')
+        ],
+        render_kw={'class':'input'}
+    )
+
+    telefono = StringField('Celular Personal', validators=[
+        DataRequired(message='Este campo es obligatorio'),
+        Length(min=10, max=10, 
+            message='El número celular debe ser de 10 dígitos')
+        ],
+        render_kw={'class':'input'}
+    )
+
+    email = StringField('Correo Electrónico (No es obligatorio)', 
+        render_kw={'class':'input'}
+    )
+
+    comentario = TextAreaField(
+        'Comentario', 
+        validators=[
+            DataRequired(message='Este campo es obligatorio')
+        ],
+        render_kw={'class':'textarea'}
+    )    
+
+    submit = SubmitField(
+        'Enviar', 
+        render_kw={'class':'button is-link is-large'}
+    )

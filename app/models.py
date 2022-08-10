@@ -100,7 +100,15 @@ class TicketSoporte(db.Model):
     telefono = db.Column(db.String(10))    
     email = db.Column(db.String(50))
     asunto = db.Column(db.Integer)
-    comentario = db.Column(db.String(1000))
+    comentario = db.Column(db.Text)
+
+    def get_asunto(self):
+        if self.asunto == 0:
+            return 'Corrección de Datos'
+        elif self.asunto == 1:
+            return 'Ayuda para entrar'
+        else:
+            return 'Ayuda General'
 
 @login.user_loader
 def load_user(id):
