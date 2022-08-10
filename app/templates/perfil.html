@@ -1,17 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if current_user.foto == 'none' %}
-        {% if current_user.boleta_carta == 'none' and current_user.grado|int > 1 %}
-            <div class="container is-fluid mt-4">
-                <div class="notification is-danger is-size-4 has-text-centered">
-                    Es necesario que subas una foto tuya (selfie) y foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="container is-fluid mt-4">
+            {% for message in messages %}
+                <div class="notification is-danger is-light is-size-4 has-text-centered">
+                    <button class="delete"></button>
+                    {{ message }}
                 </div>
-            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    {% if current_user.foto == 'none' %}
+        {% if current_user.boleta_carta == 'none' %}
+            {% if current_user.grado|int > 1 %}
+                <div class="container is-fluid mt-4">
+                    <div class="notification is-danger is-size-4 has-text-centered">
+                        Es necesario que subas una foto tuya (selfie) y foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
+                    </div>
+                </div>
+            {% else %}
+                <div class="container is-fluid mt-4">
+                    <div class="notification is-danger is-size-4 has-text-centered">
+                        Es necesario que subas una foto tuya (selfie) y foto de la Carta que te dio tu Párroco para completar tu registro.
+                    </div>
+                </div>
+            {% endif %}
         {% else %}
             <div class="container is-fluid mt-4">
                 <div class="notification is-danger is-size-4 has-text-centered">
-                    Es necesario que subas una foto tuya (selfie) y foto de la Carta que te dio tu Párroco para completar tu registro.
+                    Es necesario que subas una foto tuya (selfie) para completar tu registro.
                 </div>
             </div>
         {% endif %}
@@ -32,6 +53,7 @@
             {% endif %}
         {% endif %}
     {% endif %}
+    
     <div class="tile is-ancestor m-4">
         <div class="tile is-3 is-parent">
             <div class="tile is-child box notification is-info has-text-centered">
@@ -90,10 +112,21 @@
                 <p class="title">Grupo</p>
                 <div class="content is-size-2">{{ current_user.grupo }}</div>
                 <div class="content">
-                    <a class="button is-link is-medium">Solicitar Corrección de Datos</a>
+                    <a href="{{ url_for('correccion_datos') }}" class="button is-link is-medium">Solicitar Corrección de Datos</a>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                const $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+    </script>
     
 {% endblock %}
