@@ -15,8 +15,8 @@ from flask import (
     send_from_directory
 )
 from flask_login import current_user, login_user, logout_user
-from app.models import Alumno, Admin
-from app.forms import LoginForm, RegisterForm, UploadForm
+from app.models import Alumno, Admin, TicketSoporte
+from app.forms import LoginForm, RegisterForm, UploadForm, ContactForm
 from werkzeug.utils import secure_filename
 
 def validate_image(stream):
@@ -55,25 +55,26 @@ def entrar():
 
     form = LoginForm()
     if form.validate_on_submit():
-        alumno = Alumno.query.filter_by(
+        alumnos = Alumno.query.filter_by(
             apellido_p=form.apellido_p.data,
             apellido_m=form.apellido_m.data
-        ).first()    
-        if alumno is None:
+        )   
+        if len(alumnos) == 0:
             flash('No hay ningún alumno con esos apellidos')
             return redirect(url_for('entrar'))
         else:
-            if (
-                str(alumno.dia_nac) == str(form.dia_nac.data) and
-                str(alumno.mes_nac) == str(form.mes_nac.data) and
-                str(alumno.año_nac) == str(form.año_nac.data)
-            ):  
-                login_user(alumno, remember=True)
-                session['account_type'] = 'Alumno'
-                return redirect(url_for('perfil'))
-            else:
-                flash('Fecha de nacimiento incorrecta')
-                return redirect(url_for('entrar'))
+            for alumno in alumnos:
+                if (
+                    str(alumno.dia_nac) == str(form.dia_nac.data) and
+                    str(alumno.mes_nac) == str(form.mes_nac.data) and
+                    str(alumno.año_nac) == str(form.año_nac.data)
+                ):  
+                    login_user(alumno, remember=True)
+                    session['account_type'] = 'Alumno'
+                    return redirect(url_for('perfil'))
+                    
+            flash('Fecha de nacimiento incorrecta')
+            return redirect(url_for('entrar'))
     
     return render_template('entrar.html', title='Entrar al Curso', form=form)
 
@@ -221,4 +222,39 @@ def boletas(filename):
 @login_required_admin
 def admin():
     pass
+
+@app.route('/correccion-datos', methods=['GET', 'POST'])
+@login_required_alumno
+def correccion_datos():
+    info = {
+        'title' : 'Solicitud de Corrección de Datos',
+        'label' : '¿Qué es lo que necesita ser corregido?'
+    }
+    
+    form = ContactForm()
+
+    if form.validate_on_submit():
+        ticket = TicketSoporte(
+            nombre = form.nombre.data,
+            decanato = form.decanato.data,
+            parroquia = form.parroquia.data,
+            telefono = form.telefono.data,
+            email = form.email.data,
+            asunto = 0,
+            comentario = form.comentario.data
+        )
+
+        db.session.add(ticket)
+        db.session.commit()
+
+        flash('Tu solicitud ha sido recibida')
+        return redirect(url_for('perfil'))
+
+    return render_template(
+        'ayuda.html', 
+        title='Contacto',
+        form=form, 
+        info=info
+    )
+
 
