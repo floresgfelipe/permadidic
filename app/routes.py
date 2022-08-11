@@ -58,7 +58,7 @@ def entrar():
         alumnos = Alumno.query.filter_by(
             apellido_p=form.apellido_p.data,
             apellido_m=form.apellido_m.data
-        )   
+        ).all()   
         if len(alumnos) == 0:
             flash('No hay ningún alumno con esos apellidos')
             return redirect(url_for('entrar'))
@@ -258,9 +258,43 @@ def correccion_datos():
 
     return render_template(
         'ayuda.html', 
-        title='Contacto',
+        title='Corrección de Datos',
         form=form, 
         info=info
     )
 
+@app.route('/ayuda', methods=['GET', 'POST'])
+def ayuda():
+    info = {
+        'title' : 'Necesito ayuda para entrar',
+        'label' : '¿En qué te podemos ayudar?'
+    }
+    
+    print('holaaaaa')
+    form = ContactForm()
 
+    if form.validate_on_submit():
+        print('holaaaaa mundo')
+        ticket = TicketSoporte(
+            nombre = form.nombre.data,
+            decanato = form.decanato.data,
+            parroquia = form.parroquia.data,
+            telefono = form.telefono.data,
+            email = form.email.data,
+            asunto = 1,
+            comentario = form.comentario.data
+        )
+
+        db.session.add(ticket)
+        db.session.commit()
+
+        flash('Tu solicitud ha sido recibida')
+        return redirect(url_for('entrar'))
+
+    return render_template(
+        'ayuda.html', 
+        title='Ayuda para entrar',
+        form=form, 
+        info=info
+    )
+    

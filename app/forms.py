@@ -216,10 +216,10 @@ class RegisterForm(FlaskForm):
 class UploadForm(FlaskForm):
     file = FileField('File', validators=[
             FileRequired(message='Selecciona un archivo'),
-            FileAllowed(upload_set=['jpg', 'png', 'gif', 'jpeg'], 
+            FileAllowed(upload_set=['jpg','png','gif','jpeg'], 
                 message='Selecciona una imagen, por favor. Extensiones permitidas: png, jpg, jpeg, gif.'),
         ],
-        render_kw={'class':'file-input', 'accept':'png, jpg, jpeg, gif'}
+        render_kw={'class':'file-input', 'accept':'.png,.jpg,.jpeg,.gif'}
     )
     submit = SubmitField('Subir Foto', render_kw={'class':'button is-link'})
 

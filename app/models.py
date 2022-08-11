@@ -56,7 +56,7 @@ class Alumno(UserMixin, db.Model):
             c = self.id
 
         self.matricula = str(self.grado) + \
-             str(self.grupo) + str(self.nombres[0]) + c
+             str(self.grupo) + str.upper((self.nombres[0])) + c
     
     def get_grado(self):
         if self.grado == 1:
