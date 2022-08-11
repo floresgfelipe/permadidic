@@ -1,3 +1,4 @@
+from email.policy import default
 from sqlalchemy import ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -101,6 +102,7 @@ class TicketSoporte(db.Model):
     email = db.Column(db.String(50))
     asunto = db.Column(db.Integer)
     comentario = db.Column(db.Text)
+    resuelto = db.Column(db.Integer, default=0)
 
     def get_asunto(self):
         if self.asunto == 0:
@@ -109,6 +111,12 @@ class TicketSoporte(db.Model):
             return 'Ayuda para entrar'
         else:
             return 'Ayuda General'
+        
+    def is_resuelto(self):
+        if self.resuelto == 0:
+            return False
+        else:
+            return True
 
 @login.user_loader
 def load_user(id):
