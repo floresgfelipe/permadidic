@@ -3,4 +3,4 @@ Pipfile.lock
 app/database/permanente.db
 u
 .flaskenv
-
+Pipfile
