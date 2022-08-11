@@ -2,3 +2,5 @@ Pipfile.lock
 .env
 app/database/permanente.db
 u
+Pipfile
+Pipfile.lock
