@@ -2,10 +2,10 @@
 
 {% block content %}
         
-    <section class="hero is-fullheight-with-navbar">
-        <div class="hero-body">
-            <div class="columns">
-                <div class="column is-two-thirds">
+    <div class="container is-fluid mt-4">
+        
+            <div class="columns is-desktop">
+                <div class="column">
                     <img src="{{ url_for('static', filename='landing.jpg') }}">
                 </div>
                 
@@ -21,6 +21,6 @@
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
+        
+    </div>
 {% endblock %}

@@ -15,25 +15,18 @@
                 <a class="navbar-item" href="{{ url_for('index') }}">
                   <img src="{{ url_for('static', filename='didic_logo.jpg') }}" width="28" height="28">
                 </a>
+                <a href="{{ url_for('index') }}" class="navbar-item">
+                    Escuela Diocesana de Catequesis Veracruz
+                </a >
+                {% if current_user.is_authenticated %}
+                    <div class="buttons">
+                        <a class="button is-primary ml-6" href="{{ url_for('logout') }}">
+                        <strong>Salir</strong>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
             
-                
-            </div>
-            <div class="navbar-menu">
-                <div class="navbar-start">
-                    <a href="{{ url_for('index') }}" class="navbar-item">
-                        Escuela Diocesana de Catequesis Veracruz
-                    </a >
-                </div>
-                <div class="navbar-end">
-                    {% if current_user.is_authenticated %}
-                        <div class="buttons">
-                            <a class="button is-primary mr-4" href="{{ url_for('logout') }}">
-                            <strong>Salir</strong>
-                            </a>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
         </nav>            
         
        

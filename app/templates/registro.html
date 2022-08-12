@@ -9,7 +9,7 @@
     </div>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        <div class="columns">
+        <div class="columns is-desktop">
             <div class="field column">
                 <label class="label">{{ form.nombres.label }}</label>
                 <div class="control">
@@ -45,7 +45,7 @@
         <p class="title is-4 has-text-centered">Fecha de Nacimiento</p>
         
         
-        <div class="columns">
+        <div class="columns is-mobile">
             <div class="column"></div>
             <div class="field column">
                 <label class="label">{{ form.dia_nac.label }}</label>
@@ -86,7 +86,7 @@
         
             <div class="column"></div>
         </div>
-        <div class="columns">
+        <div class="columns is-desktop">
             <div class="field column">
                 <label class="label">{{ form.decanato.label }}</label>
                 <div class="control is-expanded">
@@ -136,7 +136,7 @@
                 <p class="help is-danger">{{ error }}</p>
             {% endfor %}
         </div>
-        <div class="columns">
+        <div class="columns is-desktop">
             <div class="field column">
                 <label class="label">{{ form.telefono.label }} (10 dígitos)</label>
                 <div class="control">
@@ -158,7 +158,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="field columns">
+        <div class="field columns is-desktop">
             <div class="column"></div>
             <div class="control column">
                 {{ form.recaptcha }}

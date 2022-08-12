@@ -2,7 +2,8 @@
 
 {% block content %}
     
-    <div class="columns is-mobile is-centered">
+<div class="container is-fluid">
+    <div class="columns is-desktop is-centered">
         <div class="column"></div>
         <div class="column">
             {% with messages = get_flashed_messages() %}
@@ -84,4 +85,5 @@
         </div>
         <div class="column"></div>
     </div>
+</div>
 {% endblock %}

@@ -54,65 +54,67 @@
         {% endif %}
     {% endif %}
     
-    <div class="tile is-ancestor m-4">
-        <div class="tile is-3 is-parent">
-            <div class="tile is-child box notification is-info has-text-centered">
-                {% if current_user.foto == 'none' %}
-                    <figure class="image is-1by1">
-                        <img src="{{ url_for('static', filename='anon.jpg') }}">
-                    </figure>
-                {% else %}
-                    <figure class="image">
-                        <img src="{{ url_for('fotos', filename=basename(current_user.foto)) }}">
-                    </figure>
-                {% endif %}
-                
-                {% if current_user.foto == 'none' %}
-                    <div class="content mt-4">
-                        <a href="{{ url_for('subir_foto') }}" class="button is-danger is-medium">Subir Foto (Selfie)</a>
-                    </div>
-                {% endif %}
-                {% if current_user.boleta_carta == 'none' %}
-                    {% if current_user.grado|int > 1 %}
-                        <div class="content mt-4">
-                            <a href="{{ url_for('subir_boleta') }}" class="button is-danger is-medium">Subir Boleta del Curso Anterior</a>
-                        </div>
+    <div class="container is-fluid">
+        <div class="columns is-desktop mt-4">
+            <div class="column">
+                <div class="box notification is-info has-text-centered">
+                    {% if current_user.foto == 'none' %}
+                        <figure class="image is-1by1">
+                            <img src="{{ url_for('static', filename='anon.jpg') }}">
+                        </figure>
                     {% else %}
+                        <figure class="image">
+                            <img src="{{ url_for('fotos', filename=basename(current_user.foto)) }}">
+                        </figure>
+                    {% endif %}
+                    
+                    {% if current_user.foto == 'none' %}
                         <div class="content mt-4">
-                            <a href="{{ url_for('subir_boleta') }}" class="button is-danger is-medium">Subir Carta del Párroco</a>
+                            <a href="{{ url_for('subir_foto') }}" class="button is-danger is-medium">Subir Foto (Selfie)</a>
                         </div>
                     {% endif %}
-                {% endif %}
+                    {% if current_user.boleta_carta == 'none' %}
+                        {% if current_user.grado|int > 1 %}
+                            <div class="content mt-4">
+                                <a href="{{ url_for('subir_boleta') }}" class="button is-danger is-medium">Subir Boleta del Curso Anterior</a>
+                            </div>
+                        {% else %}
+                            <div class="content mt-4">
+                                <a href="{{ url_for('subir_boleta') }}" class="button is-danger is-medium">Subir Carta del Párroco</a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
-        </div>
-        <div class="tile is-6 is-parent">
-            <div class="tile is-child box notification has-background-light">
-                <p class="title">Nombre Completo</p>
-                <div class="content is-size-2">{{ current_user.nombres }} {{ current_user.apellido_p }} {{ current_user.apellido_m }}</div>
-                <p class="title">Fecha de Nacimiento</p>
-                <div class="content is-size-2">{{ current_user.dia_nac }} / {{ current_user.mes_nac }} / {{ current_user.año_nac }}</div>
-                <p class="title">Decanato</p>
-                <div class="content is-size-2">{{ current_user.decanato }}</div>
-                <p class="title">Parroquia</p>
-                <div class="content is-size-2">{{ current_user.parroquia }}</div>
-                {% if current_user.correo != '' %}
-                    <p class="title">Correo Electrónico</p>
-                    <div class="content is-size-2">{{ current_user.correo }}</div>
-                {% endif %}
-                <p class="title">Teléfono Celular</p>
-                <div class="content is-size-2">{{ current_user.telefono }}</div>
+            <div class="column">
+                <div class="box notification has-background-light">
+                    <p class="title">Nombre Completo</p>
+                    <div class="content is-size-2">{{ current_user.nombres }} {{ current_user.apellido_p }} {{ current_user.apellido_m }}</div>
+                    <p class="title">Fecha de Nacimiento</p>
+                    <div class="content is-size-2">{{ current_user.dia_nac }} / {{ current_user.mes_nac }} / {{ current_user.año_nac }}</div>
+                    <p class="title">Decanato</p>
+                    <div class="content is-size-2">{{ current_user.decanato }}</div>
+                    <p class="title">Parroquia</p>
+                    <div class="content is-size-2">{{ current_user.parroquia }}</div>
+                    {% if current_user.correo != '' %}
+                        <p class="title">Correo Electrónico</p>
+                        <div class="content is-size-2">{{ current_user.correo }}</div>
+                    {% endif %}
+                    <p class="title">Teléfono Celular</p>
+                    <div class="content is-size-2">{{ current_user.telefono }}</div>
+                </div>
             </div>
-        </div>
-        <div class="tile is-parent">
-            <div class="tile is-child box notification is-warning">
-                <p class="title">Matrícula</p>
-                <div class="content is-size-2">{{ current_user.matricula }}</div>
-                <p class="title">Grado</p>
-                <div class="content is-size-2">{{ current_user.get_grado() }}</div>
-                <p class="title">Grupo</p>
-                <div class="content is-size-2">{{ current_user.grupo }}</div>
-                <div class="content">
-                    <a href="{{ url_for('correccion_datos') }}" class="button is-link is-medium">Solicitar Corrección de Datos</a>
+            <div class="column">
+                <div class="box notification is-warning">
+                    <p class="title">Matrícula</p>
+                    <div class="content is-size-2">{{ current_user.matricula }}</div>
+                    <p class="title">Grado</p>
+                    <div class="content is-size-2">{{ current_user.get_grado() }}</div>
+                    <p class="title">Grupo</p>
+                    <div class="content is-size-2">{{ current_user.grupo }}</div>
+                    <div class="content">
+                        <a href="{{ url_for('correccion_datos') }}" class="button is-link is-medium">Solicitar Corrección de Datos</a>
+                    </div>
                 </div>
             </div>
         </div>
