@@ -75,13 +75,19 @@
                     </div>
                 </div>
                 
-                <p>{{ form.recaptcha }}</p>
-                {% for error in form.recaptcha.errors %}
-                    <p class="help is-danger">{{ error }}</p>
-                {% endfor %}
-                <p>{{ form.submit() }}</p>
+                <div class="columns is-mobile">
+                    <div class="control column">
+                        {{ form.recaptcha }}
+                        {% for error in form.recaptcha.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="control column">
+                        {{ form.submit() }}
+                    </div>
+                </div>
             </form>
-            <div class="content mt-4 is-size-4"><a href="{{ url_for('ayuda') }}">Necesito ayuda para entrar</a></div>
+            <div class="content mt-4 is-size-4 is-size-2-touch"><a href="{{ url_for('ayuda') }}">Necesito ayuda para entrar</a></div>
         </div>
         <div class="column"></div>
     </div>

@@ -74,7 +74,7 @@ class LoginForm(FlaskForm):
 
     submit = SubmitField(
         'Entrar', 
-        render_kw={'class':'button is-link is-large mt-4'}
+        render_kw={'class':'button is-link is-large mt-4 is-size-2-touch'}
         )
 
 class RegisterForm(FlaskForm):
@@ -205,12 +205,13 @@ class RegisterForm(FlaskForm):
  
 
     recaptcha = RecaptchaField(validators=[
-        Recaptcha(message='Presiona sobre "No soy un robot"')
-    ])
+            Recaptcha(message='Presiona sobre "No soy un robot"'),
+        ]
+    )
 
     submit = SubmitField(
         'Enviar', 
-        render_kw={'class':'button is-link is-large'}
+        render_kw={'class':'button is-link is-large is-size-2-touch'}
     )
     
 class UploadForm(FlaskForm):
@@ -221,7 +222,7 @@ class UploadForm(FlaskForm):
         ],
         render_kw={'class':'file-input is-large', 'accept':'.png,.jpg,.jpeg,.gif'}
     )
-    submit = SubmitField('Subir Foto', render_kw={'class':'button is-link is-large'})
+    submit = SubmitField('Subir Foto', render_kw={'class':'button is-link is-large is-size-2-touch'})
 
 class ContactForm(FlaskForm):
     nombre = StringField('Nombre Completo', validators=[
@@ -264,5 +265,5 @@ class ContactForm(FlaskForm):
 
     submit = SubmitField(
         'Enviar', 
-        render_kw={'class':'button is-link is-large'}
+        render_kw={'class':'button is-link is-large is-size-2-touch'}
     )
