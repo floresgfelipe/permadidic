@@ -18,13 +18,13 @@ class LoginForm(FlaskForm):
     apellido_p = StringField(
         'Apellido Paterno', 
         validators=[DataRequired(message='Este campo es obligatorio')],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     apellido_m = StringField(
         'Apellido Materno', 
         validators=[DataRequired(message='Este campo es obligatorio')],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     dia_nac = SelectField(
@@ -83,7 +83,7 @@ class RegisterForm(FlaskForm):
         Length(min=1, max=50, 
             message='El largo del nombre debe ser entre 1 y 50 caracteres')
         ],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     apellido_p = StringField('Apellido Paterno', validators=[
@@ -91,7 +91,7 @@ class RegisterForm(FlaskForm):
         Length(min=1, max=50,
              message='El largo del apellido debe ser entre 1 y 50 caracteres')
         ],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     apellido_m = StringField('Apellido Materno', validators=[
@@ -99,7 +99,7 @@ class RegisterForm(FlaskForm):
         Length(min=1, max=50,
              message='El largo del apellido debe ser entre 1 y 50 caracteres')
         ],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     dia_nac = SelectField(
@@ -196,11 +196,11 @@ class RegisterForm(FlaskForm):
         Length(min=10, max=10, 
             message='El número celular debe ser de 10 dígitos')
         ],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     correo = StringField('Correo Electrónico', 
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
  
 
@@ -219,27 +219,27 @@ class UploadForm(FlaskForm):
             FileAllowed(upload_set=['jpg','png','gif','jpeg'], 
                 message='Selecciona una imagen, por favor. Extensiones permitidas: png, jpg, jpeg, gif.'),
         ],
-        render_kw={'class':'file-input', 'accept':'.png,.jpg,.jpeg,.gif'}
+        render_kw={'class':'file-input is-large', 'accept':'.png,.jpg,.jpeg,.gif'}
     )
-    submit = SubmitField('Subir Foto', render_kw={'class':'button is-link'})
+    submit = SubmitField('Subir Foto', render_kw={'class':'button is-link is-large'})
 
 class ContactForm(FlaskForm):
     nombre = StringField('Nombre Completo', validators=[
         DataRequired(message='Este campo es obligatorio')
         ],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     decanato = StringField('Decanato', validators=[
         DataRequired(message='Este campo es obligatorio')
         ],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     parroquia = StringField('Parroquia', validators=[
         DataRequired(message='Este campo es obligatorio')
         ],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     telefono = StringField('Celular Personal', validators=[
@@ -247,11 +247,11 @@ class ContactForm(FlaskForm):
         Length(min=10, max=10, 
             message='El número celular debe ser de 10 dígitos')
         ],
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     email = StringField('Correo Electrónico (No es obligatorio)', 
-        render_kw={'class':'input'}
+        render_kw={'class':'input is-large'}
     )
 
     comentario = TextAreaField(

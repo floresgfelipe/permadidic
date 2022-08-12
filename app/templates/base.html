@@ -15,9 +15,9 @@
                 <a class="navbar-item" href="{{ url_for('index') }}">
                   <img src="{{ url_for('static', filename='didic_logo.jpg') }}" width="28" height="28">
                 </a>
-                <a href="{{ url_for('index') }}" class="navbar-item">
+                <a href="{{ url_for('index') }}" class="navbar-item is-size-4-touch">
                     Escuela Diocesana de Catequesis Veracruz
-                </a >
+                </a>
                 {% if current_user.is_authenticated %}
                     <div class="buttons">
                         <a class="button is-primary ml-6" href="{{ url_for('logout') }}">
