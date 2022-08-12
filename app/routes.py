@@ -235,12 +235,11 @@ def correccion_datos():
         'label' : '¿Qué es lo que necesita ser corregido?'
     }
     
-    print('holaaaaa')
     form = ContactForm()
 
     if form.validate_on_submit():
-        print('holaaaaa mundo')
         ticket = TicketSoporte(
+            id_alumno = current_user.id,
             nombre = form.nombre.data,
             decanato = form.decanato.data,
             parroquia = form.parroquia.data,
@@ -270,11 +269,9 @@ def ayuda():
         'label' : '¿En qué te podemos ayudar?'
     }
     
-    print('holaaaaa')
     form = ContactForm()
 
     if form.validate_on_submit():
-        print('holaaaaa mundo')
         ticket = TicketSoporte(
             nombre = form.nombre.data,
             decanato = form.decanato.data,

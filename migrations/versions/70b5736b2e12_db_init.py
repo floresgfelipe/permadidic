@@ -1,8 +1,8 @@
-"""DB init
+"""db init
 
-Revision ID: 8e314df282ac
+Revision ID: 70b5736b2e12
 Revises: 
-Create Date: 2022-08-11 10:51:53.663143
+Create Date: 2022-08-11 20:13:42.515959
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8e314df282ac'
+revision = '70b5736b2e12'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -50,6 +50,7 @@ def upgrade():
     )
     op.create_table('ticket_soporte',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('id_alumno', sa.Integer(), nullable=True),
     sa.Column('nombre', sa.String(length=200), nullable=True),
     sa.Column('decanato', sa.String(length=50), nullable=True),
     sa.Column('parroquia', sa.String(length=80), nullable=True),

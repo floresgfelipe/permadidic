@@ -95,6 +95,7 @@ class TicketSoporte(db.Model):
     __tablename__ = 'ticket_soporte'
 
     id =  db.Column(db.Integer, primary_key=True)
+    id_alumno = db.Column(db.Integer)
     nombre = db.Column(db.String(200))
     decanato = db.Column(db.String(50))
     parroquia = db.Column(db.String(80))
