@@ -5,7 +5,7 @@
         {% if messages %}
         <div class="container is-fluid mt-4">
             {% for message in messages %}
-                <div class="notification is-danger is-light is-size-4 has-text-centered">
+                <div class="notification is-danger is-light is-size-4 is-size-2-touch has-text-centered">
                     <button class="delete"></button>
                     {{ message }}
                 </div>
@@ -18,20 +18,20 @@
         {% if current_user.boleta_carta == 'none' %}
             {% if current_user.grado|int > 1 %}
                 <div class="container is-fluid mt-4">
-                    <div class="notification is-danger is-size-4 has-text-centered">
+                    <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
                         Es necesario que subas una foto tuya (selfie) y foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
                     </div>
                 </div>
             {% else %}
                 <div class="container is-fluid mt-4">
-                    <div class="notification is-danger is-size-4 has-text-centered">
+                    <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
                         Es necesario que subas una foto tuya (selfie) y foto de la Carta que te dio tu Párroco para completar tu registro.
                     </div>
                 </div>
             {% endif %}
         {% else %}
             <div class="container is-fluid mt-4">
-                <div class="notification is-danger is-size-4 has-text-centered">
+                <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
                     Es necesario que subas una foto tuya (selfie) para completar tu registro.
                 </div>
             </div>
@@ -40,13 +40,13 @@
         {% if current_user.boleta_carta == 'none' %}
             {% if current_user.grado|int > 1 %}
                 <div class="container is-fluid mt-4">
-                    <div class="notification is-danger is-size-4 has-text-centered">
+                    <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
                         Es necesario que subas una foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
                     </div>
                 </div>
             {% else %}
                 <div class="container is-fluid mt-4">
-                    <div class="notification is-danger is-size-4 has-text-centered">
+                    <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
                         Es necesario que subas una foto de la Carta que te dio tu Párroco para completar tu registro.
                     </div>
                 </div>
@@ -58,6 +58,8 @@
         <div class="columns is-desktop mt-4">
             <div class="column">
                 <div class="box notification is-info has-text-centered">
+                    <div class="columns is-mobile">
+                    <div class="column">
                     {% if current_user.foto == 'none' %}
                         <figure class="image is-1by1">
                             <img src="{{ url_for('static', filename='anon.jpg') }}">
@@ -67,23 +69,26 @@
                             <img src="{{ url_for('fotos', filename=basename(current_user.foto)) }}">
                         </figure>
                     {% endif %}
-                    
+                    </div>
+                    <div class="column">
                     {% if current_user.foto == 'none' %}
                         <div class="content mt-4">
-                            <a href="{{ url_for('subir_foto') }}" class="button is-danger is-medium">Subir Foto (Selfie)</a>
+                            <a href="{{ url_for('subir_foto') }}" class="button is-danger is-normal is-size-2-touch">Subir Foto (Selfie)</a>
                         </div>
                     {% endif %}
                     {% if current_user.boleta_carta == 'none' %}
                         {% if current_user.grado|int > 1 %}
                             <div class="content mt-4">
-                                <a href="{{ url_for('subir_boleta') }}" class="button is-danger is-medium">Subir Boleta del Curso Anterior</a>
+                                <a href="{{ url_for('subir_boleta') }}" class="button is-danger is-normal is-size-2-touch">Subir Boleta del Curso Anterior</a>
                             </div>
                         {% else %}
                             <div class="content mt-4">
-                                <a href="{{ url_for('subir_boleta') }}" class="button is-danger is-medium">Subir Carta del Párroco</a>
+                                <a href="{{ url_for('subir_boleta') }}" class="button is-danger is-normal is-size-2-touch">Subir Carta del Párroco</a>
                             </div>
                         {% endif %}
                     {% endif %}
+                    </div>
+                    </div>
                 </div>
             </div>
             <div class="column">
@@ -113,7 +118,7 @@
                     <p class="title">Grupo</p>
                     <div class="content is-size-2">{{ current_user.grupo }}</div>
                     <div class="content">
-                        <a href="{{ url_for('correccion_datos') }}" class="button is-link is-medium">Solicitar Corrección de Datos</a>
+                        <a href="{{ url_for('correccion_datos') }}" class="button is-link is-medium is-size-2-touch">Solicitar Corrección de Datos</a>
                     </div>
                 </div>
             </div>
