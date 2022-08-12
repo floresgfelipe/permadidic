@@ -106,16 +106,16 @@ def registro():
     if form.validate_on_submit():
         alumno = Alumno(
             matricula = 'none', 
-            nombres = form.nombres.data,
-            apellido_p = form.apellido_p.data,
-            apellido_m = form.apellido_m.data,
+            nombres = form.nombres.data.strip(),
+            apellido_p = form.apellido_p.data.strip(),
+            apellido_m = form.apellido_m.data.strip(),
             dia_nac = form.dia_nac.data,
             mes_nac = form.mes_nac.data,
             año_nac = form.año_nac.data,
-            decanato = form.decanato.data,
-            parroquia = form.parroquia.data,
+            decanato = form.decanato.data.strip(),
+            parroquia = form.parroquia.data.strip(),
             telefono = form.telefono.data,
-            correo = form.correo.data,
+            correo = form.correo.data.strip(),
             grado = form.grado.data,
             grupo = 'A',
             servicio = form.servicio.data
