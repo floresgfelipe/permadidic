@@ -161,16 +161,17 @@
         <div class="field columns is-mobile">
             
             <div class="control column">
-                {{ form.recaptcha }}
+                <div class="is-pulled-right">
+                    {{ form.recaptcha }}
+                </div>
                 {% for error in form.recaptcha.errors %}
                     <p class="help is-size-4-touch is-danger">{{ error }}</p>
                 {% endfor %}
             </div>
 
-            <div class="control column">
+            <div class="control column has-text-centered">
                 {{ form.submit() }}
             </div>
-            <div class="column"></div>
         </div>
         
     </form>
