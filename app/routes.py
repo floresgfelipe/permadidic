@@ -18,6 +18,7 @@ from flask_login import current_user, login_user, logout_user
 from app.models import Alumno, Admin, TicketSoporte
 from app.forms import LoginForm, RegisterForm, UploadForm, ContactForm
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 def validate_image(stream):
     header = stream.read(512)
@@ -172,8 +173,11 @@ def subir_foto():
                         app.config['UPLOAD_PATH_FOTOS'], 
                         current_user.get_id() + file_ext
                     )
+                
+                pic = Image.open(uploaded_file)
+                pic.thumbnail((1200,1200))
 
-                uploaded_file.save(saved_filename)
+                pic.save(saved_filename)
                 
                 current_user.foto = saved_filename
                 db.session.commit()

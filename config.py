@@ -11,7 +11,7 @@ class Config(object):
     RECAPTCHA_PARAMETERS = {'hl':'es'}
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    MAX_CONTENT_LENGTH = 5 * 1024 * 1024
+    MAX_CONTENT_LENGTH = 10 * 1024 * 1024
     UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']
     UPLOAD_PATH_BOLETAS = os.path.join(basedir, 'u', 'boletas')
     UPLOAD_PATH_FOTOS = os.path.join(basedir, 'u', 'fotos')
