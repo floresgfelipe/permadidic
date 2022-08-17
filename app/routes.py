@@ -57,7 +57,7 @@ def index():
 
 @app.route('/entrar', methods=['GET', 'POST'])
 def entrar():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and session['account_type'] == 'Alumno':
         return redirect(url_for('perfil'))
 
     form = LoginForm()
@@ -109,7 +109,7 @@ def login():
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and session['account_type'] == 'Alumno':
         return redirect(url_for('perfil'))
 
     form = RegisterForm()
@@ -323,3 +323,12 @@ def fotos_admin(filename):
 @login_required_admin
 def boletas_admin(filename):
     return send_from_directory(app.config['UPLOAD_PATH_BOLETAS'], filename)
+
+@app.route('/tickets')
+@login_required_admin
+def tickets():
+    tickets = TicketSoporte.query
+    return render_template(
+        'tickets.html',
+        tickets=tickets,
+    )

@@ -1,0 +1,43 @@
+{% extends 'base-admin.html' %}
+
+{% block content %}
+
+<div>
+    <h1 class="title is-1">Tickets de Soporte</h1>
+    <hr>
+    <div id="table"></div>
+</div>
+<script>
+    new gridjs.Grid({
+      columns: [
+        { id: 'id_alumno', name: 'ID alumno' },
+        { id: 'nombre', name: 'Nombre' },
+        { id: 'decanato', name: 'Decanato' },
+        { id: 'parroquia', name: 'Parroquia' },
+        { id: 'telefono', name: 'Teléfono', sort: false },
+        { id: 'email', name: 'E-mail', sort: false },
+        { id: 'asunto', name: 'Asunto', sort: false },
+        { id: 'comentario', name: 'Comentario', sort: false },
+        { id: 'resuelto', name: 'Resuelto', sort: false },
+    ],
+      data: [
+        {% for ticket in tickets %}
+          {
+            id_alumno: '{{ ticket.id_alumno }}',
+            nombre: '{{ ticket.nombre }}',
+            decanato: '{{ ticket.decanato }}',
+            parroquia: '{{ ticket.parroquia }}',
+            telefono: '{{ ticket.telefono }}',
+            email: '{{ ticket.email }}',
+            asunto: "{{ ticket.asunto }}",
+            comentario: "{{ ticket.comentario }}",
+            resuelto: "{{ ticket.is_resuelto() }}",
+          },
+        {% endfor %}
+      ],
+      search: true,
+      sort: true,
+      pagination: true,
+    }).render(document.getElementById('table'));
+</script>
+{% endblock %}
