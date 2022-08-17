@@ -4,15 +4,14 @@ from wtforms import (
     StringField, 
     SubmitField, 
     SelectField,
-    TextAreaField
+    TextAreaField,
+    PasswordField,
 )
 from wtforms.validators import (
     DataRequired,
     Length,
 )
 from flask_wtf.recaptcha import RecaptchaField, Recaptcha
-
-
 
 class LoginForm(FlaskForm):
     apellido_p = StringField(
@@ -267,3 +266,27 @@ class ContactForm(FlaskForm):
         'Enviar', 
         render_kw={'class':'button is-link is-large is-size-2-touch'}
     )
+
+class AdminLoginForm(FlaskForm):
+    email = StringField(
+        'E-mail', 
+        validators=[DataRequired(message='Este campo es obligatorio')],
+        render_kw={'class':'input is-large'}
+    )
+
+    contraseña = PasswordField(
+        'Contraseña',
+        validators=[DataRequired(message='Este campo es obligatorio')],
+        render_kw={'class':'input is-large'}
+    )
+
+    recaptcha = RecaptchaField(validators=[
+            Recaptcha(message='Presiona sobre "No soy un robot"'),
+        ]
+    )
+
+    submit = SubmitField(
+        'Enviar', 
+        render_kw={'class':'button is-link is-large is-size-2-touch'}
+    )
+    

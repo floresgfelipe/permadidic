@@ -16,7 +16,13 @@ from flask import (
 )
 from flask_login import current_user, login_user, logout_user
 from app.models import Alumno, Admin, TicketSoporte
-from app.forms import LoginForm, RegisterForm, UploadForm, ContactForm
+from app.forms import (
+    LoginForm,
+    RegisterForm, 
+    UploadForm, 
+    ContactForm,
+    AdminLoginForm,
+)
 from werkzeug.utils import secure_filename
 from PIL import Image
 
@@ -81,21 +87,25 @@ def entrar():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and session['account_type'] == 'Admin':
         return redirect(url_for('admin'))
 
-    form = LoginForm()
+    form = AdminLoginForm()
     if form.validate_on_submit():
-        admin = Admin.query.filter_by(email=form.username.data).first()    
-        if admin is None or not admin.check_password(form.password.data):
+        admin = Admin.query.filter_by(email=form.email.data).first()    
+        if admin is None or not admin.check_password(form.contraseña.data):
             flash('Correo o contraseña inválidos')
             return redirect(url_for('login'))
             
-        login_user(admin, remember=form.remember_me.data)
+        login_user(admin, remember=True)
         session['account_type'] = 'Admin'
         return redirect(url_for('admin'))
     
-    return render_template('entrar.html', title='Admin', form=form)
+    return render_template(
+        'login.html', 
+        title='Admin', 
+        form=form, 
+    )
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -226,11 +236,6 @@ def subir_boleta():
 def boletas(filename):
     return send_from_directory(app.config['UPLOAD_PATH_BOLETAS'], filename)
 
-@app.route('/admin')
-@login_required_admin
-def admin():
-    pass
-
 @app.route('/correccion-datos', methods=['GET', 'POST'])
 @login_required_alumno
 def correccion_datos():
@@ -299,3 +304,22 @@ def ayuda():
         info=info
     )
     
+@app.route('/admin')
+@login_required_admin
+def admin():
+    alumnos = Alumno.query
+    return render_template(
+        'admin.html',
+        alumnos=alumnos,
+        basename=os.path.basename,
+    )
+
+@app.route('/fotos_admin/<filename>')
+@login_required_admin
+def fotos_admin(filename):
+    return send_from_directory(app.config['UPLOAD_PATH_FOTOS'], filename)
+
+@app.route('/boletas_admin/<filename>')
+@login_required_admin
+def boletas_admin(filename):
+    return send_from_directory(app.config['UPLOAD_PATH_BOLETAS'], filename)
