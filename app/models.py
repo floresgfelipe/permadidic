@@ -119,6 +119,9 @@ class TicketSoporte(db.Model):
         else:
             return True
 
+    def get_comentario(self):
+        return ''.join(self.comentario.splitlines())
+
 @login.user_loader
 def load_user(id):
     if session.get('account_type') == 'Admin':

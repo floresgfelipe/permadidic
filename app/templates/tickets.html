@@ -18,7 +18,7 @@
         { id: 'email', name: 'E-mail', sort: false },
         { id: 'asunto', name: 'Asunto', sort: false },
         { id: 'comentario', name: 'Comentario', sort: false },
-        { id: 'resuelto', name: 'Resuelto', sort: false },
+        { id: 'resuelto', name: '¿Resuelto?', sort: false },
     ],
       data: [
         {% for ticket in tickets %}
@@ -29,8 +29,8 @@
             parroquia: '{{ ticket.parroquia }}',
             telefono: '{{ ticket.telefono }}',
             email: '{{ ticket.email }}',
-            asunto: "{{ ticket.asunto }}",
-            comentario: "{{ ticket.comentario }}",
+            asunto: "{{ ticket.get_asunto() }}",
+            comentario: "{{ ticket.get_comentario() }}",
             resuelto: "{{ ticket.is_resuelto() }}",
           },
         {% endfor %}
