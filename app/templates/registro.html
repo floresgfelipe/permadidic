@@ -138,7 +138,7 @@
         </div>
         <div class="columns is-desktop">
             <div class="field column">
-                <label class="label is-size-3-touch">{{ form.telefono.label }} (10 dígitos)</label>
+                <label class="label is-size-3-touch">{{ form.telefono.label }} (10 dígitos sin guiones ni espacios)</label>
                 <div class="control">
                     {{ form.telefono(size=50)}}
                 </div>
@@ -216,7 +216,8 @@
                 ['esp-santo', 'El Espíritu Santo'],
                 ['s-judas', 'San Judas Tadeo'],
                 ['s-teresa', 'Santa Teresa de Ávila'],
-                ['ns-rosario', 'Nuestra Señora del Rosario']
+                ['ns-rosario', 'Nuestra Señora del Rosario'],
+                ['El Señor de la Divina Misericordia', 'El Señor de la Divina Misericordia'],
             ],
             'Santa Ana' : [
                 ['s-ana', 'Santa Ana'],
