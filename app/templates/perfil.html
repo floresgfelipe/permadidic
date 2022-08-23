@@ -5,7 +5,7 @@
         {% if messages %}
         <div class="container is-fluid mt-4">
             {% for message in messages %}
-                <div class="notification is-danger is-light is-size-4 is-size-2-touch has-text-centered">
+                <div class="notification is-success is-size-4 is-size-2-touch has-text-centered">
                     <button class="delete"></button>
                     {{ message }}
                 </div>
@@ -18,21 +18,21 @@
         {% if current_user.boleta_carta == 'none' %}
             {% if current_user.grado|int > 1 %}
                 <div class="container is-fluid mt-4">
-                    <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
-                        Es necesario que subas una foto tuya (selfie) y foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
+                    <div class="notification is-primary is-light is-size-4 is-size-2-touch has-text-centered">
+                        Favor de subir una foto tuya (Selfie) y una foto de tu boleta del curso anterior.
                     </div>
                 </div>
             {% else %}
                 <div class="container is-fluid mt-4">
-                    <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
-                        Es necesario que subas una foto tuya (selfie) y foto de la Carta que te dio tu Párroco para completar tu registro.
+                    <div class="notification is-primary is-light is-size-4 is-size-2-touch has-text-centered">
+                        Favor de subir una foto tuya (Selfie) y una foto de la carta expedida por tu Párroco.
                     </div>
                 </div>
             {% endif %}
         {% else %}
             <div class="container is-fluid mt-4">
-                <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
-                    Es necesario que subas una foto tuya (selfie) para completar tu registro.
+                <div class="notification is-primary is-light is-size-4 is-size-2-touch has-text-centered">
+                    Favor de subir una foto tuya (Selfie).
                 </div>
             </div>
         {% endif %}
@@ -40,14 +40,14 @@
         {% if current_user.boleta_carta == 'none' %}
             {% if current_user.grado|int > 1 %}
                 <div class="container is-fluid mt-4">
-                    <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
-                        Es necesario que subas una foto de tu boleta del curso PERMANENTE anterior para completar tu registro.
+                    <div class="notification is-primary is-light is-size-4 is-size-2-touch has-text-centered">
+                        Favor de subir una foto de tu boleta del curso anterior.
                     </div>
                 </div>
             {% else %}
                 <div class="container is-fluid mt-4">
-                    <div class="notification is-danger is-size-4 is-size-2-touch has-text-centered">
-                        Es necesario que subas una foto de la Carta que te dio tu Párroco para completar tu registro.
+                    <div class="notification is-primary is-light is-size-4 is-size-2-touch has-text-centered">
+                        Favor de subir una foto de la carta expedida por tu Párroco.
                     </div>
                 </div>
             {% endif %}

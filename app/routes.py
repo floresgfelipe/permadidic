@@ -140,6 +140,8 @@ def registro():
 
         login_user(alumno, remember=True)
         session['account_type'] = 'Alumno'
+        flash('¡Felicidades! Te has inscrito en el curso Permanente de la \
+               Escuela Diocesana de Catequesis')
         return redirect(url_for('perfil'))  
     
     return render_template(
