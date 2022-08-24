@@ -37,10 +37,18 @@
             parroquia: '{{ alumno.parroquia }}',
             telefono: '{{ alumno.telefono }}',
             correo: '{{ alumno.correo }}',
+            {% if alumno.foto != 'none' %}
             foto: gridjs.html("<a href={{ url_for('fotos_admin', filename=basename(alumno.foto)) }}>Foto</a>"),
+            {% else %}
+            foto: '',
+            {% endif %}
             grado: "{{ alumno.grado }}",
             grupo: "{{ alumno.grupo }}",
-            boleta_carta: gridjs.html("<a href={{ url_for('boletas_admin', filename=basename(alumno.boleta_carta)) }}>Boleta</a>"),
+            {% if alumno.boleta_carta != 'none' %}
+            boleta_carta: gridjs.html("<a href={{ url_for('boletas_admin', filename=basename(alumno.boleta_carta)) }}>B/C</a>"),
+            {% else %}
+            boleta_carta: '',
+            {% endif %}
             servicio: "{{ alumno.servicio }}",
           },
         {% endfor %}
