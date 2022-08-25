@@ -11,6 +11,7 @@
     new gridjs.Grid({
       columns: [
         { id: 'id', name: 'ID' },
+        { id: 'matricula', name: 'Matricula' },
         { id: 'nombres', name: 'Nombre(s)' },
         { id: 'apellido_p', name: 'Apellido Paterno' },
         { id: 'apellido_m', name: 'Apellido Materno' },
@@ -29,6 +30,7 @@
         {% for alumno in alumnos %}
           {
             id: '{{ alumno.id }}',
+            matricula: '{{ alumno.matricula }}',
             nombres: '{{ alumno.nombres }}',
             apellido_p: '{{ alumno.apellido_p }}',
             apellido_m: '{{ alumno.apellido_m }}',
