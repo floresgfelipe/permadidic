@@ -57,7 +57,11 @@
       ],
       search: true,
       sort: true,
-      pagination: true,
+      pagination: {
+        enabled: true,
+        limit: 15,
+        buttonsCount: 15,
+      }
     }).render(document.getElementById('table'));
 </script>
 
