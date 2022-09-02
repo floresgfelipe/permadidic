@@ -54,7 +54,7 @@ class Alumno(UserMixin, db.Model):
         elif self.id < 100:
             c = '0' + str(self.id)
         else:
-            c = self.id
+            c = str(self.id)
 
         self.matricula = str(self.grado) + \
              str(self.grupo) + str.upper((self.nombres[0])) + c
