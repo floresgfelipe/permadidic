@@ -25,6 +25,7 @@ from app.forms import (
 )
 from werkzeug.utils import secure_filename
 from PIL import Image
+from sqlalchemy import func
 
 def validate_image(stream):
     header = stream.read(512)
@@ -62,9 +63,13 @@ def entrar():
 
     form = LoginForm()
     if form.validate_on_submit():
-        alumnos = Alumno.query.filter_by(
-            apellido_p=form.apellido_p.data,
-            apellido_m=form.apellido_m.data
+        alumnos = Alumno.query.filter(
+            func.lower(
+                Alumno.apellido_p
+            ) == func.lower(str(form.apellido_p.data).strip()),
+            func.lower(
+                Alumno.apellido_m
+            ) == func.lower(str(form.apellido_m.data).strip())
         ).all()   
         if len(alumnos) == 0:
             flash('No hay ningún alumno con esos apellidos')
