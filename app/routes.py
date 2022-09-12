@@ -24,7 +24,7 @@ from app.forms import (
     AdminLoginForm,
 )
 from werkzeug.utils import secure_filename
-from PIL import Image
+from PIL import Image, ImageOps
 from sqlalchemy import func
 
 def validate_image(stream):
@@ -192,6 +192,7 @@ def subir_foto():
                     )
                 
                 pic = Image.open(uploaded_file)
+                pic = ImageOps.exif_transpose(pic)
                 pic.thumbnail((1200,1200))
 
                 pic.save(saved_filename)
@@ -229,7 +230,11 @@ def subir_boleta():
                         current_user.get_id() + file_ext
                     )
 
-                uploaded_file.save(saved_filename)
+                pic = Image.open(uploaded_file)
+                pic = ImageOps.exif_transpose(pic)
+                pic.thumbnail((1200,1200))
+
+                pic.save(saved_filename)
                 
                 current_user.boleta_carta = saved_filename
                 db.session.commit()
