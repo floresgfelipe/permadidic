@@ -1,6 +1,7 @@
 Pipfile.lock
 .env
-app/database/permanente.db
+app/database/
 u
 .flaskenv
 Pipfile
+excel/
