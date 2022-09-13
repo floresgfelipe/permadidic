@@ -15,4 +15,5 @@ class Config(object):
     UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']
     UPLOAD_PATH_BOLETAS = os.path.join(basedir, 'u', 'boletas')
     UPLOAD_PATH_FOTOS = os.path.join(basedir, 'u', 'fotos')
+    EXCEL_PATH = os.path.join(basedir, 'excel')
     
