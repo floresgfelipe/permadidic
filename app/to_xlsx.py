@@ -1,7 +1,6 @@
 import os
-from app import app
+from app import app, db
 from app.models import Alumno
-from flask import url_for
 
 import pandas as pd
 
@@ -39,12 +38,28 @@ def alumno_to_dict(alumno):
         rt_dict['Foto'] = 'NO DISPONIBLE'
 
     if alumno.boleta_carta != 'none':
-        rt_dict['Boleta'] = ('https://catequesisver.org/boletas_admin/' 
+        rt_dict['Boleta o Carta'] = ('https://catequesisver.org/boletas_admin/' 
                                 + os.path.basename(alumno.boleta_carta))
     else:
-        rt_dict['Boleta'] = 'NO DISPONIBLE'
+        rt_dict['Boleta o Carta'] = 'NO DISPONIBLE'
 
     return rt_dict
+
+def split_primero():
+    alumnos_1o = Alumno.query.filter_by(grado=1).order_by(Alumno.id).all()
+    c = 0
+
+    for alumno in alumnos_1o:
+        if c >= 98 and c <= 195:
+            alumno.grupo = 'B'
+            alumno.generar_matricula()
+            db.session.commit()
+        elif c > 195:
+            alumno.grupo = 'C'
+            alumno.generar_matricula()
+            db.session.commit()
+
+        c += 1
 
 
 def alumnos_to_excel():
@@ -52,9 +67,17 @@ def alumnos_to_excel():
     lista_al = [alumno_to_dict(alumno) for alumno in alumnos]
     df = pd.DataFrame(lista_al)
     
-    alumnos_1o = Alumno.query.filter_by(grado=1).all()
-    lista_1o = [alumno_to_dict(alumno) for alumno in alumnos_1o]
-    df1 = pd.DataFrame(lista_1o)
+    alumnos_1a = Alumno.query.filter_by(grado=1, grupo='A').all()
+    lista_1a = [alumno_to_dict(alumno) for alumno in alumnos_1a]
+    df1a = pd.DataFrame(lista_1a)
+
+    alumnos_1b = Alumno.query.filter_by(grado=1, grupo='B').all()
+    lista_1b = [alumno_to_dict(alumno) for alumno in alumnos_1b]
+    df1b = pd.DataFrame(lista_1b)
+
+    alumnos_1c = Alumno.query.filter_by(grado=1, grupo='C').all()
+    lista_1c = [alumno_to_dict(alumno) for alumno in alumnos_1c]
+    df1c = pd.DataFrame(lista_1c)
 
     alumnos_2o = Alumno.query.filter_by(grado=2).all()
     lista_2o = [alumno_to_dict(alumno) for alumno in alumnos_2o]
@@ -72,9 +95,11 @@ def alumnos_to_excel():
     writer = pd.ExcelWriter(filename)
 
     df.to_excel(writer, sheet_name='General', index=False)
-    df1.to_excel(writer, sheet_name='Primero', index=False)
-    df2.to_excel(writer, sheet_name='Segundo', index=False)
-    df3.to_excel(writer, sheet_name='Tercero', index=False)
+    df1a.to_excel(writer, sheet_name='1A', index=False)
+    df1b.to_excel(writer, sheet_name='1B', index=False)
+    df1c.to_excel(writer, sheet_name='1C', index=False)
+    df2.to_excel(writer, sheet_name='2o', index=False)
+    df3.to_excel(writer, sheet_name='3o', index=False)
     df4.to_excel(writer, sheet_name='Curso Esp.', index=False)
 
     writer.save()
