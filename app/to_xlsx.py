@@ -23,7 +23,7 @@ def alumno_to_dict(alumno):
 
     rt_dict['Parroquia'] = str(alumno.parroquia)
 
-    rt_dict['Teléfono'] = str(alumno.telefono)
+    rt_dict['Teléfono'] = int(alumno.telefono)
 
     rt_dict['Correo'] = str(alumno.correo)
 
