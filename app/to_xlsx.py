@@ -104,6 +104,11 @@ def alumnos_to_excel():
 
     writer.save()
 
+def cambiar_grupo(id, grupo):
+    al = Alumno.query.filter_by(id=id).first()
+    al.grupo = grupo
+    al.generar_matricula()
+    db.session.commit()
 
 def main():
     alumnos_to_excel()
