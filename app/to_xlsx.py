@@ -110,6 +110,12 @@ def cambiar_grupo(id, grupo):
     al.generar_matricula()
     db.session.commit()
 
+def delete_alumno(id):
+    al = Alumno.query.filter_by(id=id).first()
+    db.session.delete(al)
+    db.session.commit()
+
+
 def main():
     alumnos_to_excel()
 
