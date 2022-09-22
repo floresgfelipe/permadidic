@@ -110,6 +110,17 @@ def cambiar_grupo(id, grupo):
     al.generar_matricula()
     db.session.commit()
 
+def cambiar_grado(id, grado):
+    al = Alumno.query.filter_by(id=id).first()
+    al.grado = grado
+    al.generar_matricula()
+    db.session.commit()
+
+def cambiar_tel(id, telefono):
+    al = Alumno.query.filter_by(id=id).first()
+    al.telefono = telefono
+    db.session.commit()
+
 def delete_alumno(id):
     al = Alumno.query.filter_by(id=id).first()
     db.session.delete(al)
