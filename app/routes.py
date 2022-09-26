@@ -133,7 +133,7 @@ def registro():
             telefono = form.telefono.data,
             correo = form.correo.data.strip(),
             grado = form.grado.data,
-            grupo = 'A',
+            grupo = 'C',
             servicio = form.servicio.data
         )
 
