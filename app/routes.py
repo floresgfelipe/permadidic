@@ -120,6 +120,11 @@ def registro():
     form = RegisterForm()
 
     if form.validate_on_submit():
+        grupo = 'A'
+
+        if int(form.grado.data) == 1:
+            grupo = 'C'
+
         alumno = Alumno(
             matricula = 'none', 
             nombres = form.nombres.data.strip(),
@@ -133,7 +138,7 @@ def registro():
             telefono = form.telefono.data,
             correo = form.correo.data.strip(),
             grado = form.grado.data,
-            grupo = 'C',
+            grupo = grupo,
             servicio = form.servicio.data
         )
 
